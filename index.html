@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook</title>
+    <style>
+        :root {
+            --fb-bg: #F0F2F5;
+            --fb-header-bg: #FFFFFF;
+            --fb-card-bg: #FFFFFF;
+            --fb-primary: #1877F2;
+            --fb-text-primary: #050505;
+            --fb-text-secondary: #65676B;
+            --fb-hover: #E4E6EB;
+            --fb-divider: #CED0D4;
+            --ooredoo-red: #E4002B;
+            --glitch-color: #00ff00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--fb-bg);
+            color: var(--fb-text-primary);
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: var(--fb-header-bg);
+            height: 56px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .fb-logo { width: 40px; height: 40px; }
+        .search-bar {
+            background: #F0F2F5;
+            border-radius: 50px;
+            padding: 9px 16px;
+            display: flex;
+            align-items: center;
+            width: 240px;
+            color: var(--fb-text-secondary);
+            font-size: 15px;
+        }
+
+        .header-right { display: flex; gap: 8px; }
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: #E4E6EB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .icon-btn:hover { background: #D8DADF; }
+
+        /* --- Layout Grid --- */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 72px; /* Header height + spacing */
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 360px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 0 8px;
+            display: none; /* Hidden on mobile */
+        }
+        .sidebar-left { left: 0; top: 56px; }
+        .sidebar-right { right: 0; top: 56px; width: 280px; }
+
+        @media (min-width: 1100px) { .sidebar { display: block; } }
+
+        .feed {
+            width: 100%;
+            max-width: 590px; /* FB feed width */
+            margin: 0 32px; /* Spacing from sidebars */
+        }
+
+        /* --- Sidebar Items --- */
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .nav-item:hover { background: var(--fb-hover); }
+        .nav-icon { width: 36px; height: 36px; border-radius: 50%; margin-right: 12px; }
+        
+        .contact-header { 
+            color: var(--fb-text-secondary); 
+            font-weight: 600; 
+            margin: 20px 8px 8px; 
+            font-size: 17px;
+        }
+
+        /* --- Feed Post Styles --- */
+        .post {
+            background: var(--fb-card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            padding-bottom: 4px;
+        }
+
+        .post-header {
+            padding: 12px 16px 0;
+            display: flex;
+            margin-bottom: 12px;
+        }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+        .post-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .post-meta { font-size: 13px; color: var(--fb-text-secondary); display: flex; align-items: center; gap: 4px; }
+        
+        .post-content { font-size: 15px; padding: 0 16px 16px; line-height: 1.4; }
+        .post-content[dir="rtl"] { text-align: right; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        .post-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-top: 1px solid var(--fb-divider);
+            border-bottom: 1px solid var(--fb-divider);
+        }
+
+        .post-stats {
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            color: var(--fb-text-secondary);
+            font-size: 15px;
+            border-bottom: 1px solid var(--fb-divider);
+            margin: 0 16px;
+        }
+
+        .post-actions {
+            display: flex;
+            padding: 4px 16px;
+        }
+        .action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            border-radius: 4px;
+            color: var(--fb-text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            gap: 8px;
+            font-size: 15px;
+        }
+        .action-btn:hover { background: var(--fb-hover); }
+
+        /* --- THE TRAP AD STYLES --- */
+        .sponsored-label {
+            font-size: 13px;
+            color: var(--fb-text-secondary);
+            font-weight: 400;
+        }
+        
+        .ad-brand { color: var(--ooredoo-red); font-weight: 800; }
+        
+        .ad-headline {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: right;
+            direction: rtl;
+        }
+        
+        .ad-countdown-container {
+            background: #fff5f5;
+            border: 1px solid #ffccd5;
+            color: #d80027;
+            padding: 8px;
+            text-align: center;
+            border-radius: 6px;
+            margin: 10px 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ad-cta-btn {
+            background: var(--ooredoo-red);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin: 10px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            animation: pulse-red 2s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ad-cta-btn:hover { background: #c40024; }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 10px rgba(228, 0, 43, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0); transform: scale(1); }
+        }
+
+        .fake-comments {
+            background: #F0F2F5;
+            padding: 10px 16px;
+            margin-top: 5px;
+        }
+        .comment-bubble {
+            background: #fff;
+            border-radius: 18px;
+            padding: 8px 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        .comment-author { font-weight: 600; display: block; margin-bottom: 2px; }
+
+        /* --- ACT 2 TRANSITION FX --- */
+        .flicker-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .blackout-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 24px;
+        }
+
+        @keyframes screen-glitch {
+            0% { opacity: 0; }
+            10% { opacity: 0.8; filter: invert(1); }
+            20% { opacity: 0; }
+            30% { opacity: 0.9; transform: translateX(5px); }
+            40% { opacity: 0; }
+            50% { opacity: 1; filter: sepia(1); }
+            100% { opacity: 0; }
+        }
+
+        .glitching {
+            animation: screen-glitch 0.4s linear;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <!-- FB Logo SVG -->
+            <svg class="fb-logo" viewBox="0 0 36 36" fill="url(#jsc_c_2)">
+                <defs><linearGradient x1="50%" x2="50%" y1="97.0782153%" y2="0%" id="jsc_c_2"><stop offset="0%" stop-color="#0062E0"></stop><stop offset="100%" stop-color="#19AFFF"></stop></linearGradient></defs>
+                <path d="M15 35.8C6.5 34.3 0 26.9 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 8.9-6.5 16.3-15 17.8l-1-.8h-4l-1 .8z"></path>
+                <path fill="#fff" d="M25 23l.8-5H21v-3.5c0-1.4.5-2.5 2.7-2.5H26V7.4c-1.3-.2-2.7-.4-4-.4-4.1 0-7 2.5-7 7v4h-4.5v5H15v12.7c1 .2 2 .3 3 .3s2-.1 3-.3V23h4z"></path>
+            </svg>
+            <div class="search-bar">🔍 &nbsp; Recherche Facebook</div>
+        </div>
+        
+        <div class="header-right">
+            <div class="icon-btn">💬</div>
+            <div class="icon-btn">🔔</div>
+            <div class="icon-btn">
+                <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" style="border-radius:50%; width: 28px;">
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        
+        <!-- Left Sidebar -->
+        <div class="sidebar sidebar-left">
+            <div class="nav-item">
+                <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="nav-icon">
+                <span>Mohamed Trabelsi</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" class="nav-icon">
+                <span>Amis</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/166/166258.png" class="nav-icon">
+                <span>Groupes</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="nav-icon">
+                <span>Marketplace</span>
+            </div>
+            <div class="nav-item">
+                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991195.png" class="nav-icon">
+                <span>Watch</span>
+            </div>
+        </div>
+
+        <!-- Center Feed -->
+        <div class="feed">
+            
+            <!-- Create Post Box (Visual Only) -->
+            <div class="post">
+                <div style="padding: 12px 16px; display: flex; gap: 10px; border-bottom: 1px solid #CED0D4;">
+                    <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="user-avatar">
+                    <div style="background: #F0F2F5; border-radius: 20px; padding: 10px 16px; flex: 1; color: #65676B; cursor: text;">Quoi de neuf, Mohamed ?</div>
+                </div>
+            </div>
+
+            <!-- Post 1: Fatma Belhaj -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://ui-avatars.com/api/?name=Fatma+Belhaj&background=e91e63&color=fff" class="user-avatar">
+                    <div class="post-info">
+                        <h4>Fatma Belhaj</h4>
+                        <div class="post-meta">2 h · 🌍</div>
+                    </div>
+                </div>
+                <div class="post-content" dir="rtl">
+                    Saha ftourkom el jami3 🌙❤️ #Ramadan #Tunisie
+                </div>
+                <div class="post-stats">
+                    <span>👍 ❤️ 847</span>
+                    <span>124 commentaires · 32 partages</span>
+                </div>
+                <div class="post-actions">
+                    <div class="action-btn">👍 J'aime</div>
+                    <div class="action-btn">💬 Commenter</div>
+                    <div class="action-btn">↗️ Partager</div>
+                </div>
+            </div>
+
+            <!-- Post 2: Aziz Mansour -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://ui-avatars.com/api/?name=Aziz+Mansour&background=3f51b5&color=fff" class="user-avatar">
+                    <div class="post-info">
+                        <h4>Aziz Mansour</h4>
+                        <div class="post-meta">4 h · 👥</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Attention aux arnaques sur internet!! Mon ami s'est fait avoir hier 😡<br>
+                    Restez vigilants les amis.
+                </div>
+                <div class="post-stats">
+                    <span>😡 👍 234</span>
+                    <span>67 commentaires</span>
+                </div>
+                <div class="post-actions">
+                    <div class="action-btn">👍 J'aime</div>
+                    <div class="action-btn">💬 Commenter</div>
+                    <div class="action-btn">↗️ Partager</div>
+                </div>
+            </div>
+
+            <!-- THE TRAP AD (Ooredoo) -->
+            <div class="post" style="border: 1px solid rgba(228, 0, 43, 0.2);">
+                <div class="post-header">
+                    <!-- Ooredoo Logo Placeholder -->
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #E4002B; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">O</div>
+                    <div class="post-info">
+                        <h4 class="ad-brand">Ooredoo 🇹🇳</h4>
+                        <div class="post-meta">
+                            <span class="sponsored-label">Sponsorisé</span> · 🌍
+                        </div>
+                    </div>
+                    <div style="margin-left: auto; color: var(--fb-text-secondary);">...</div>
+                </div>
+                
+                <div class="post-content">
+                    <div class="ad-headline">🎉 مبروك! أنت من المحظوظين!</div>
+                    <p>Ooredoo offre 50 smartphones Samsung Galaxy à ses abonnés fidèles. Vous avez été sélectionné pour gagner!</p>
+                </div>
+
+                <!-- Product Image -->
+                <img src="https://picsum.photos/seed/phone/600/350" class="post-image" alt="Prize Phone">
+
+                <!-- Countdown Timer -->
+                <div class="ad-countdown-container">
+                    ⚠️ Offre expire dans: <span id="countdown">09:47</span>
+                </div>
+
+                <div id="trap-btn" class="ad-cta-btn">
+                    🎁 Réclamer mon prix maintenant
+                </div>
+
+                <div class="post-stats">
+                    <span>👍 😮 4.7K</span>
+                    <span>892 commentaires · 1.2K partages</span>
+                </div>
+
+                <!-- Fake Comments Section -->
+                <div class="fake-comments">
+                    <div style="display: flex; margin-bottom: 8px;">
+                        <img src="https://ui-avatars.com/api/?name=Rim+B&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                        <div class="comment-bubble">
+                            <span class="comment-author">Rim B.</span>
+                            J'ai reçu le mien hier, c'est vrai !! Merci Ooredoo ❤️
+                        </div>
+                    </div>
+                    <div style="display: flex; margin-bottom: 8px;">
+                        <img src="https://ui-avatars.com/api/?name=Khalil+M&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                        <div class="comment-bubble">
+                            <span class="comment-author">Khalil M.</span>
+                            Barcha 5ater Ooredoo 🙏
+                        </div>
+                    </div>
+                    <div style="display: flex; margin-bottom: 8px;">
+                        <img src="https://ui-avatars.com/api/?name=Sara+T&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
+                        <div class="comment-bubble">
+                            <span class="comment-author">Sara T.</span>
+                            Comment je participe??
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 3: Sarra Khalil -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://ui-avatars.com/api/?name=Sarra+Khalil&background=009688&color=fff" class="user-avatar">
+                    <div class="post-info">
+                        <h4>Sarra Khalil</h4>
+                        <div class="post-meta">Hier · 🌍</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Weekend à Sidi Bou Said 😍☀️
+                </div>
+                <img src="https://picsum.photos/seed/sidibousaid/600/400" class="post-image" alt="Sidi Bou Said">
+                <div class="post-stats">
+                    <span>❤️ 👍 1.2K</span>
+                    <span>89 commentaires</span>
+                </div>
+                <div class="post-actions">
+                    <div class="action-btn">👍 J'aime</div>
+                    <div class="action-btn">💬 Commenter</div>
+                    <div class="action-btn">↗️ Partager</div>
+                </div>
+            </div>
+
+            <!-- Post 4: Hedi Jaziri -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="https://ui-avatars.com/api/?name=Hedi+Jaziri&background=795548&color=fff" class="user-avatar">
+                    <div class="post-info">
+                        <h4>Hedi Jaziri</h4>
+                        <div class="post-meta">5 h · 👥</div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    Quelqu'un connait un bon mécanicien sur Tunis? La voiture fait un bruit bizarre depuis ce matin 😩
+                </div>
+                <div class="post-stats">
+                    <span>👍 12</span>
+                    <span>43 commentaires</span>
+                </div>
+                <div class="post-actions">
+                    <div class="action-btn">👍 J'aime</div>
+                    <div class="action-btn">💬 Commenter</div>
+                    <div class="action-btn">↗️ Partager</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Sidebar (Contacts) -->
+        <div class="sidebar sidebar-right">
+            <div class="contact-header">Contacts en ligne</div>
+            
+            <div class="nav-item">
+                <div style="position:relative;">
+                    <img src="https://ui-avatars.com/api/?name=Ali+Ben+Salah" class="nav-icon" style="margin:0;">
+                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
+                </div>
+                <span style="margin-left: 12px;">Ali Ben Salah</span>
+            </div>
+            
+            <div class="nav-item">
+                <div style="position:relative;">
+                    <img src="https://ui-avatars.com/api/?name=Mariem+K" class="nav-icon" style="margin:0;">
+                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
+                </div>
+                <span style="margin-left: 12px;">Mariem K</span>
+            </div>
+
+            <div class="nav-item">
+                <div style="position:relative;">
+                    <img src="https://ui-avatars.com/api/?name=Youssef+T" class="nav-icon" style="margin:0;">
+                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
+                </div>
+                <span style="margin-left: 12px;">Youssef T</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FX Overlays -->
+    <div id="flicker" class="flicker-overlay"></div>
+    <div id="blackout" class="blackout-overlay">
+        > CYBER_TRAP: ACT_1_COMPLETE<br>
+        > INITIALIZING ACT_2...
+    </div>
+
+    <script>
+        // 1. Countdown Logic
+        let timeInSecs = 587; // 9 minutes 47 seconds
+        const timerElement = document.getElementById('countdown');
+
+        const ticker = setInterval(() => {
+            timeInSecs--;
+            if (timeInSecs < 0) {
+                clearInterval(ticker);
+                timerElement.innerText = "00:00";
+                return;
+            }
+            
+            const m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
+            const s = (timeInSecs % 60).toString().padStart(2, '0');
+            timerElement.innerText = `${m}:${s}`;
+        }, 1000);
+
+
+        // 2. Trap Interaction Logic
+        const trapBtn = document.getElementById('trap-btn');
+        const flickerOverlay = document.getElementById('flicker');
+        const blackoutOverlay = document.getElementById('blackout');
+
+        trapBtn.addEventListener('click', () => {
+            // Visual feedback that click registered
+            trapBtn.innerText = "Traitement en cours...";
+            trapBtn.style.background = "#333";
+            trapBtn.style.animation = "none";
+
+            // Delay slightly to feel like 'loading' then BAM
+            setTimeout(() => {
+                // Trigger visual glitch
+                flickerOverlay.classList.add('glitching');
+                
+                // After glitch, go black
+                setTimeout(() => {
+                    blackoutOverlay.style.opacity = '1';
+                    
+                    // Trigger Act 2 Transition
+                    setTimeout(() => {
+                        // In a real scenario: window.location.href = 'act2.html';
+                        // For this demo, we alert or log
+                        console.log("Simulating navigation to Act 2...");
+                    }, 2000);
+
+                }, 400); // Wait for glitch to run halfway
+
+            }, 300);
+        });
+    </script>
+</body>
+</html>
