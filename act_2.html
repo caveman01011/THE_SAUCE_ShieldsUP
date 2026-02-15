@@ -783,16 +783,6 @@
                 setTimeout(() => startProgress(), 2500);
             }, 3300);
         }
-        
-        // ─── CTA ──────────────────────────────────────────────────────
-        document.getElementById('cta').addEventListener('click', (e) => {
-            e.preventDefault();
-            const wo = document.getElementById('white-out');
-            wo.style.display = 'block';
-            setTimeout(() => { wo.style.transition = 'opacity 0.8s'; wo.style.opacity = 1; }, 10);
-            setTimeout(() => { window.location.href = 'act_3.html'; }, 820);
-        });
-
         // ───────── Credential breach trigger ─────────
 
 let credTriggered = false;
