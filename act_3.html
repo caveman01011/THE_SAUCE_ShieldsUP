@@ -405,6 +405,33 @@
             letter-spacing: 1px; text-transform: uppercase;
         }
 
+        /* ── SUGGESTION CHIPS ──────────────────────────────────────── */
+        #suggestions {
+            flex-shrink: 0;
+            padding: 10px 16px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border);
+        }
+        #suggestions.hidden { display: none; }
+        .suggestion-chip {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--white-dim);
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border-bright);
+            border-left: 2px solid var(--white-faint);
+            padding: 6px 12px; cursor: pointer;
+            transition: background 0.1s, color 0.1s, border-color 0.1s;
+            white-space: nowrap;
+        }
+        .suggestion-chip::before { content: '// '; color: var(--white-faint); transition: color 0.1s; }
+        .suggestion-chip:hover { background: var(--blue-dim); color: var(--white); border-color: var(--blue-bright); border-left-color: var(--blue-bright); }
+        .suggestion-chip:hover::before { color: var(--blue-bright); }
+        .suggestion-chip:active { background: var(--blue); color: var(--white); }
+
         /* ── FADE-IN on load ────────────────────────────────────────── */
         #layout {
             opacity: 0;
@@ -495,6 +522,16 @@
                 <div class="typing-dot"></div>
             </div>
 
+            <!-- Suggestion chips -->
+            <div id="suggestions">
+                <div class="suggestion-chip" data-msg="C'était quoi exactement ce formulaire de carte bancaire ?">Formulaire bancaire</div>
+                <div class="suggestion-chip" data-msg="Comment reconnaître un faux site web ?">Faux sites</div>
+                <div class="suggestion-chip" data-msg="Comment protéger mes mots de passe ?">Mots de passe</div>
+                <div class="suggestion-chip" data-msg="Comment éviter les arnaques WhatsApp en Tunisie ?">Arnaques WhatsApp</div>
+                <div class="suggestion-chip" data-msg="Qu'est-ce qu'un ransomware et comment s'en protéger ?">Ransomware</div>
+                <div class="suggestion-chip" data-msg="Quels sont les bons réflexes en cybersécurité au quotidien ?">Réflexes quotidiens</div>
+            </div>
+
             <div id="input-bar">
                 <div class="input-label">ENTREZ VOTRE MESSAGE</div>
                 <div class="input-row">
@@ -575,7 +612,7 @@ Donne toujours 1 conseil concret actionnable à la fin de chaque réponse.
 Contexte: l'utilisateur vient de voir ses données exposées (IP, ville, appareil) et un faux écran ransomware qui demandait sa carte bancaire. Il n'a rien soumis — c'était une simulation éducative de CyberTrap.
 Ne dépasse jamais 4 paragraphes courts par réponse.`;
 
-        const HF_TOKEN = "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"; // 🔑 Replace with real token
+        const HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // 🔑 Replace with real token
 
         // ─── Call HuggingFace Router API ──────────────────────────────
         async function callLLM(userMessage) {
@@ -645,6 +682,26 @@ Ne dépasse jamais 4 paragraphes courts par réponse.`;
                 e.preventDefault();
                 sendMessage(e.target.value);
             }
+        });
+
+        // ─── Suggestion chips ─────────────────────────────────────────
+        const SUGGESTIONS = document.querySelectorAll('.suggestion-chip');
+
+        function hideSuggestions() {
+            document.getElementById('suggestions').classList.add('hidden');
+        }
+
+        SUGGESTIONS.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const msg = chip.dataset.msg;
+                // Flash the chip active state briefly before sending
+                chip.style.background = 'var(--blue)';
+                chip.style.color = 'var(--white)';
+                setTimeout(() => {
+                    hideSuggestions();        // hide all chips after first use
+                    sendMessage(msg);         // send directly — no textarea needed
+                }, 120);
+            });
         });
 
         // ─── Quick topic buttons ──────────────────────────────────────
