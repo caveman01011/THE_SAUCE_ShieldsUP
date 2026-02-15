@@ -156,12 +156,23 @@
             padding: 14px;
         }
         .char-avatar {
-            width: 56px; height: 56px;
+            width: 180px;
+            height: 180px;
             border: 1px solid var(--blue);
-            background: var(--blue-dim);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; margin-bottom: 10px;
+            background: var(--bg-panel-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px auto;
+            overflow: hidden;
         }
+        
+        .char-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .char-name {
             font-size: 13px; letter-spacing: 3px;
             text-transform: uppercase; color: var(--white);
@@ -448,7 +459,10 @@
             <div class="sidebar-section-label">// Expert</div>
 
             <div class="character-block">
-                <div class="char-avatar" id="char-avatar">🎭</div>
+                <div class="char-avatar" id="char-avatar">
+                    <img src="./OIG4_inspyrenet.png" alt="M4SK">
+                </div>
+
                 <div class="char-name">M4SK</div>
                 <div class="char-title">Expert · Cybersécurité TN</div>
                 <div class="char-status">
@@ -458,15 +472,6 @@
             </div>
 
             <div class="sidebar-divider"></div>
-            <div class="sidebar-section-label">// Sujets</div>
-
-            <div class="topic-item active" data-topic="Ce qui vient de se passer">Phishing</div>
-            <div class="topic-item" data-topic="Comment protéger mes mots de passe ?">Mots de passe</div>
-            <div class="topic-item" data-topic="Comment éviter les arnaques WhatsApp ?">WhatsApp</div>
-            <div class="topic-item" data-topic="Comment reconnaître un faux site web ?">Faux sites</div>
-            <div class="topic-item" data-topic="Qu'est-ce qu'un ransomware et comment s'en protéger ?">Ransomware</div>
-            <div class="topic-item" data-topic="Quels sont les bons réflexes en cybersécurité au quotidien ?">Réflexes quotidiens</div>
-
             <div class="sidebar-footer">
                 SIMULATION ÉDUCATIVE<br>
                 CYBERTRAP © 2025<br>
