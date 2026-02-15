@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>...</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #000;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Noise texture ──────────────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            animation: noise-shift 0.08s steps(1) infinite;
+        }
+        @keyframes noise-shift {
+            0%  { background-position: 0 0; }
+            25% { background-position: -10px 5px; }
+            50% { background-position: 5px -10px; }
+            75% { background-position: -5px -5px; }
+        }
+
+        /* ── CRT scanlines ──────────────────────────────────────── */
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.12) 2px,
+                rgba(0,0,0,0.12) 4px
+            );
+        }
+
+        /* ── CENTER STAGE ───────────────────────────────────────── */
+        #stage {
+            position: relative; z-index: 10;
+            text-align: center;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        /* ── Phase 1: DATA CAPTURED ─────────────────────────────── */
+        #phase-captured {
+            display: none;
+        }
+
+        .big-text {
+            font-size: clamp(42px, 8vw, 88px);
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            line-height: 1;
+            color: #FF0000;
+            text-shadow:
+                0 0 20px rgba(255,0,0,0.8),
+                0 0 60px rgba(255,0,0,0.4),
+                4px 0 0 rgba(0,255,255,0.3),
+               -4px 0 0 rgba(255,0,255,0.3);
+            animation: captured-flicker 0.15s steps(1) infinite;
+        }
+        @keyframes captured-flicker {
+            0%,92%,100% { opacity: 1; }
+            94%          { opacity: 0.7; text-shadow: 8px 0 0 rgba(0,255,255,0.5), -8px 0 0 rgba(255,0,255,0.5), 0 0 20px rgba(255,0,0,0.8); }
+            96%          { opacity: 1; }
+            98%          { opacity: 0.85; text-shadow: -5px 0 0 rgba(0,255,0,0.4), 5px 0 0 rgba(255,0,0,0.4); }
+        }
+
+        .captured-sub {
+            font-size: 13px;
+            letter-spacing: 6px;
+            color: #ff4444;
+            text-transform: uppercase;
+            margin-top: 16px;
+            opacity: 0;
+            animation: fade-in-slow 0.4s ease 0.3s forwards;
+        }
+        @keyframes fade-in-slow {
+            to { opacity: 1; }
+        }
+
+        /* ── Horizontal scan line that sweeps down ──────────────── */
+        .scan-sweep {
+            position: fixed;
+            top: -4px; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.8), transparent);
+            box-shadow: 0 0 12px rgba(255,0,0,0.6);
+            animation: sweep-down 1.2s linear infinite;
+            z-index: 5;
+            display: none;
+        }
+        @keyframes sweep-down {
+            from { top: -4px; }
+            to   { top: 100vh; }
+        }
+
+        /* ── Phase 2: Terminal data dump ─────────────────────────── */
+        #phase-terminal {
+            display: none;
+            text-align: left;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .term-line {
+            font-size: 13px;
+            color: #00FF41;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+        .term-line.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .term-line.red   { color: #FF4444; }
+        .term-line.white { color: #CCCCCC; }
+        .term-line.dim   { color: #444444; }
+
+        /* ── Phase 3: INCOMING MESSAGE ───────────────────────────── */
+        #phase-message {
+            display: none;
+        }
+
+        .incoming-label {
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: #555;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            animation: blink-slow 1s steps(1) infinite;
+        }
+        @keyframes blink-slow { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+
+        .message-box {
+            border: 1px solid #1E88E5;
+            background: rgba(21, 101, 192, 0.08);
+            padding: 28px 32px;
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: left;
+            box-shadow: 0 0 40px rgba(30, 136, 229, 0.15);
+            position: relative;
+        }
+        .message-box::before {
+            content: '// INCOMING TRANSMISSION';
+            position: absolute;
+            top: -9px; left: 16px;
+            background: #000;
+            padding: 0 8px;
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: #1E88E5;
+        }
+
+        .msg-from {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: #1E88E5;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .msg-from::before {
+            content: '';
+            display: inline-block;
+            width: 6px; height: 6px;
+            background: #00e676;
+            animation: signal-blink 1.5s ease infinite;
+        }
+        @keyframes signal-blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+        .msg-text {
+            font-size: 14px;
+            color: #CCCCCC;
+            line-height: 1.8;
+            opacity: 0;
+            animation: reveal-text 0.6s ease 0.2s forwards;
+        }
+        @keyframes reveal-text { to { opacity: 1; } }
+
+        .msg-text .highlight { color: #ffffff; font-weight: bold; }
+        .msg-text .danger    { color: #FF4444; }
+        .msg-text .safe      { color: #00e676; }
+
+        /* ── Progress bar to act_3 ───────────────────────────────── */
+        #progress-wrap {
+            margin-top: 28px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .prog-label-t {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: #444;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .prog-track {
+            width: 100%;
+            height: 2px;
+            background: #111;
+        }
+        .prog-fill-t {
+            height: 100%;
+            width: 0%;
+            background: #1E88E5;
+            box-shadow: 0 0 8px rgba(30,136,229,0.6);
+            transition: width 3.5s linear;
+        }
+
+        /* ── Full screen flash overlay ───────────────────────────── */
+        #flash {
+            position: fixed; inset: 0; z-index: 999;
+            background: #fff;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scan-sweep" id="scan-sweep"></div>
+    <div id="flash"></div>
+
+    <div id="stage">
+
+        <!-- Phase 1 -->
+        <div id="phase-captured">
+            <div class="big-text">DONNÉES<br>CAPTURÉES</div>
+            <div class="captured-sub">TRANSFERT EN COURS — NE PAS ÉTEINDRE</div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div id="phase-terminal">
+            <div class="term-line dim"        id="t0">════════════════════════════════════════</div>
+            <div class="term-line"             id="t1">&gt; EXTRACTION CARTE BANCAIRE : OK</div>
+            <div class="term-line"             id="t2">&gt; DONNÉES ENVOYÉES À : 185.220.101.XX</div>
+            <div class="term-line"             id="t3">&gt; COMPRESSION FICHIERS : 100%</div>
+            <div class="term-line"             id="t4">&gt; TUNNEL CHIFFRÉ : ACTIF</div>
+            <div class="term-line red"         id="t5">&gt; ACCÈS TOTAL ACCORDÉ — BIENVENUE</div>
+            <div class="term-line dim"        id="t6">════════════════════════════════════════</div>
+            <div class="term-line white"       id="t7">&gt; MISSION ACCOMPLIE.</div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div id="phase-message">
+            <div class="incoming-label">// NOUVEAU MESSAGE</div>
+            <div class="message-box">
+                <div class="msg-from">M4SK · Expert Cybersécurité</div>
+                <div class="msg-text">
+                    Saha. T'as <span class="danger">failli</span> donner ta carte à des inconnus.<br><br>
+                    Ce formulaire ? C'est la technique la plus utilisée en Tunisie en ce moment.
+                    <span class="highlight">Fausse urgence. Vrai piège.</span><br><br>
+                    On va décortiquer ça ensemble —
+                    <span class="safe">t'inquiète, t'as rien perdu aujourd'hui.</span>
+                </div>
+            </div>
+            <div id="progress-wrap">
+                <div class="prog-label-t">Connexion à l'expert en cours...</div>
+                <div class="prog-track">
+                    <div class="prog-fill-t" id="prog-fill-t"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function show(el)  { el.style.display = 'block'; }
+        function hide(el)  { el.style.display = 'none'; }
+        function flash(cb) {
+            const f = document.getElementById('flash');
+            f.style.transition = 'opacity 0.08s ease';
+            f.style.opacity = '1';
+            setTimeout(() => {
+                f.style.transition = 'opacity 0.3s ease';
+                f.style.opacity = '0';
+                if (cb) setTimeout(cb, 310);
+            }, 80);
+        }
+
+        // ── Phase 1: DATA CAPTURED ────────────────────────────────────
+        function phase1() {
+            flash(() => {
+                const el = document.getElementById('phase-captured');
+                const sw = document.getElementById('scan-sweep');
+                show(el);
+                show(sw);
+                // Hold for 1.6s then move to phase 2
+                setTimeout(() => {
+                    flash(() => {
+                        hide(el);
+                        hide(sw);
+                        phase2();
+                    });
+                }, 1600);
+            });
+        }
+
+        // ── Phase 2: Terminal lines stagger in ───────────────────────
+        function phase2() {
+            const wrap = document.getElementById('phase-terminal');
+            show(wrap);
+
+            const ids    = ['t0','t1','t2','t3','t4','t5','t6','t7'];
+            const delays = [0, 180, 360, 520, 680, 860, 1060, 1260];
+
+            ids.forEach((id, i) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('show');
+                    // click sound on each line
+                    try {
+                        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                        const o = ctx.createOscillator(), g = ctx.createGain();
+                        o.type = 'square';
+                        o.frequency.value = 80;
+                        g.gain.setValueAtTime(0.04, ctx.currentTime);
+                        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+                        o.connect(g); g.connect(ctx.destination);
+                        o.start(); o.stop(ctx.currentTime + 0.06);
+                    } catch(e) {}
+                }, delays[i]);
+            });
+
+            // After all lines, hold then phase 3
+            setTimeout(() => {
+                flash(() => {
+                    hide(wrap);
+                    phase3();
+                });
+            }, 1260 + 1200);
+        }
+
+        // ── Phase 3: Message from M4SK + progress bar → act_3 ────────
+        function phase3() {
+            const wrap = document.getElementById('phase-message');
+            show(wrap);
+
+            // Fade in progress bar after message appears
+            setTimeout(() => {
+                const pw = document.getElementById('progress-wrap');
+                pw.style.opacity = '1';
+                // Start fill
+                setTimeout(() => {
+                    document.getElementById('prog-fill-t').style.width = '100%';
+                }, 50);
+            }, 900);
+
+            // Navigate after progress completes (3.5s fill + buffer)
+            setTimeout(() => {
+                window.location.href = 'act_3.html';
+            }, 900 + 3500 + 400);
+        }
+
+        // Kick off sequence on load
+        window.addEventListener('load', () => {
+            setTimeout(phase1, 200);
+        });
+    </script>
+</body>
+</html>
