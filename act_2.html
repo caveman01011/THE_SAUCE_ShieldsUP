@@ -422,6 +422,71 @@
         cred-glitch 0.25s infinite;
 }
 
+        /* ───────── Guardian Intervention Modal ───────── */
+
+#guardian-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+#guardian-modal.show {
+    opacity: 1;
+}
+
+.guardian-wrap {
+    position: relative;
+    margin-bottom: 30px;
+    animation: guardian-pop 0.5s ease;
+}
+
+#guardian-img {
+    width: 260px;
+    filter: drop-shadow(0 0 20px rgba(0,0,0,0.7));
+}
+
+.guardian-bubble {
+    position: absolute;
+    bottom: 220px;
+    left: 220px;
+    background: white;
+    color: #000;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-family: Tahoma, Arial;
+    font-size: 14px;
+    max-width: 260px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    animation: bubble-pop 0.4s ease;
+}
+
+.guardian-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 24px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+@keyframes guardian-pop {
+    from { transform: translateY(80px) scale(0.8); opacity: 0; }
+    to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes bubble-pop {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+
     </style>
 </head>
 <body class="glitch-active">
@@ -633,6 +698,19 @@
 
     <div class="fade-out-white" id="white-out"></div>
 
+    <!-- ───────── Cyber Guardian Modal ───────── -->
+    <div id="guardian-modal">
+        <div class="guardian-wrap">
+            <img src="OIG4_inspyrenet.png" id="guardian-img">
+    
+            <div class="guardian-bubble">
+                Mat5afch, jit lena bech nman3ek…<br>
+                ma3ach tenzel 3la random links fl internet.
+            </div>
+        </div>
+    </div>
+
+    
     <script>
         // ─── Audio click ──────────────────────────────────────────────
         let audioCtx;
@@ -792,21 +870,25 @@ function triggerCredentialBreach() {
     credTriggered = true;
 
     const mainUI = document.getElementById('main-ui');
-
-    // Apply visual chaos
     mainUI.classList.add('cred-breach');
 
-    // Optional audio distortion burst
     playGlitchSound?.(4);
 
-    // Lock inputs
     document.querySelectorAll('.cc-input').forEach(i => i.disabled = true);
 
-    // After 2 seconds → transition
+    // 👇 Guardian appears after 1 second
+    setTimeout(showGuardian, 1000);
+
+    // redirect after full chaos
     setTimeout(() => {
         window.location.href = "transition.html";
     }, 2000);
 }
+function showGuardian() {
+    const modal = document.getElementById('guardian-modal');
+    modal.classList.add('show');
+}
+
 
 // Attach to credential fields
 document.querySelectorAll('.cc-input').forEach(input => {
