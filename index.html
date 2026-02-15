@@ -15,14 +15,9 @@
             --fb-hover: #E4E6EB;
             --fb-divider: #CED0D4;
             --ooredoo-red: #E4002B;
-            --glitch-color: #00ff00;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -39,13 +34,12 @@
             position: fixed;
             top: 0;
             z-index: 100;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 16px;
         }
-
         .header-left { display: flex; align-items: center; gap: 10px; }
         .fb-logo { width: 40px; height: 40px; }
         .search-bar {
@@ -58,264 +52,254 @@
             color: var(--fb-text-secondary);
             font-size: 15px;
         }
-
         .header-right { display: flex; gap: 8px; }
         .icon-btn {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: #E4E6EB;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             cursor: pointer;
         }
         .icon-btn:hover { background: #D8DADF; }
 
-        /* --- Layout Grid --- */
+        /* --- Layout --- */
         .main-container {
             display: flex;
             justify-content: center;
-            padding-top: 72px; /* Header height + spacing */
+            padding-top: 72px;
             min-height: 100vh;
         }
-
         .sidebar {
             width: 360px;
             position: fixed;
             height: 100vh;
             overflow-y: auto;
             padding: 0 8px;
-            display: none; /* Hidden on mobile */
+            display: none;
         }
         .sidebar-left { left: 0; top: 56px; }
         .sidebar-right { right: 0; top: 56px; width: 280px; }
-
         @media (min-width: 1100px) { .sidebar { display: block; } }
-
-        .feed {
-            width: 100%;
-            max-width: 590px; /* FB feed width */
-            margin: 0 32px; /* Spacing from sidebars */
-        }
+        .feed { width: 100%; max-width: 590px; margin: 0 32px; }
 
         /* --- Sidebar Items --- */
         .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 15px;
+            display: flex; align-items: center;
+            padding: 8px; border-radius: 8px;
+            cursor: pointer; font-weight: 600; font-size: 15px;
         }
         .nav-item:hover { background: var(--fb-hover); }
         .nav-icon { width: 36px; height: 36px; border-radius: 50%; margin-right: 12px; }
-        
-        .contact-header { 
-            color: var(--fb-text-secondary); 
-            font-weight: 600; 
-            margin: 20px 8px 8px; 
+        .contact-header {
+            color: var(--fb-text-secondary);
+            font-weight: 600;
+            margin: 20px 8px 8px;
             font-size: 17px;
         }
 
-        /* --- Feed Post Styles --- */
+        /* --- Posts --- */
         .post {
             background: var(--fb-card-bg);
             border-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             margin-bottom: 16px;
             padding-bottom: 4px;
         }
-
-        .post-header {
-            padding: 12px 16px 0;
-            display: flex;
-            margin-bottom: 12px;
-        }
+        .post-header { padding: 12px 16px 0; display: flex; margin-bottom: 12px; }
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
         .post-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
         .post-meta { font-size: 13px; color: var(--fb-text-secondary); display: flex; align-items: center; gap: 4px; }
-        
         .post-content { font-size: 15px; padding: 0 16px 16px; line-height: 1.4; }
         .post-content[dir="rtl"] { text-align: right; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        .post-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-top: 1px solid var(--fb-divider);
-            border-bottom: 1px solid var(--fb-divider);
-        }
-
+        .post-image { width: 100%; height: auto; display: block; border-top: 1px solid var(--fb-divider); border-bottom: 1px solid var(--fb-divider); }
         .post-stats {
             padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            color: var(--fb-text-secondary);
-            font-size: 15px;
+            display: flex; justify-content: space-between;
+            color: var(--fb-text-secondary); font-size: 15px;
             border-bottom: 1px solid var(--fb-divider);
             margin: 0 16px;
         }
-
-        .post-actions {
-            display: flex;
-            padding: 4px 16px;
-        }
+        .post-actions { display: flex; padding: 4px 16px; }
         .action-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 36px;
-            border-radius: 4px;
-            color: var(--fb-text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            gap: 8px;
-            font-size: 15px;
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            height: 36px; border-radius: 4px;
+            color: var(--fb-text-secondary); font-weight: 600;
+            cursor: pointer; gap: 8px; font-size: 15px;
         }
         .action-btn:hover { background: var(--fb-hover); }
 
-        /* --- THE TRAP AD STYLES --- */
-        .sponsored-label {
-            font-size: 13px;
-            color: var(--fb-text-secondary);
-            font-weight: 400;
-        }
-        
+        /* --- Ad Styles --- */
+        .sponsored-label { font-size: 13px; color: var(--fb-text-secondary); font-weight: 400; }
         .ad-brand { color: var(--ooredoo-red); font-weight: 800; }
-        
-        .ad-headline {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-align: right;
-            direction: rtl;
-        }
-        
+        .ad-headline { font-size: 20px; font-weight: bold; margin-bottom: 8px; text-align: right; direction: rtl; }
         .ad-countdown-container {
-            background: #fff5f5;
-            border: 1px solid #ffccd5;
-            color: #d80027;
-            padding: 8px;
-            text-align: center;
-            border-radius: 6px;
-            margin: 10px 16px;
-            font-weight: bold;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
+            background: #fff5f5; border: 1px solid #ffccd5; color: #d80027;
+            padding: 8px; text-align: center; border-radius: 6px;
+            margin: 10px 16px; font-weight: bold;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
         }
-
         .ad-cta-btn {
-            background: var(--ooredoo-red);
-            color: white;
-            text-align: center;
-            padding: 12px;
-            margin: 10px 16px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
+            background: var(--ooredoo-red); color: white;
+            text-align: center; padding: 12px;
+            margin: 10px 16px; border-radius: 6px;
+            font-weight: bold; font-size: 16px; cursor: pointer;
             animation: pulse-red 2s infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            user-select: none;
         }
-
         .ad-cta-btn:hover { background: #c40024; }
-
         @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.7); transform: scale(1); }
-            70% { box-shadow: 0 0 0 10px rgba(228, 0, 43, 0); transform: scale(1.02); }
-            100% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0); transform: scale(1); }
+            0%   { box-shadow: 0 0 0 0 rgba(228,0,43,0.7); transform: scale(1); }
+            70%  { box-shadow: 0 0 0 10px rgba(228,0,43,0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(228,0,43,0); transform: scale(1); }
         }
-
-        .fake-comments {
-            background: #F0F2F5;
-            padding: 10px 16px;
-            margin-top: 5px;
-        }
+        .fake-comments { background: #F0F2F5; padding: 10px 16px; margin-top: 5px; }
         .comment-bubble {
-            background: #fff;
-            border-radius: 18px;
-            padding: 8px 12px;
-            display: inline-block;
-            margin-bottom: 8px;
-            font-size: 13px;
+            background: #fff; border-radius: 18px;
+            padding: 8px 12px; display: inline-block;
+            margin-bottom: 8px; font-size: 13px;
         }
         .comment-author { font-weight: 600; display: block; margin-bottom: 2px; }
 
-        /* --- ACT 2 TRANSITION FX --- */
-        .flicker-overlay {
+        /* ============================================
+           TRANSITION OVERLAYS
+        ============================================ */
+
+        /* Layer 1 — Glitch flicker (white flash) */
+        #flicker-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: white;
-            z-index: 9999;
+            z-index: 9000;
             opacity: 0;
             pointer-events: none;
         }
-        
-        .blackout-overlay {
+
+        /* Layer 2 — Full page glitch distortion */
+        #glitch-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            z-index: 10000;
+            z-index: 9100;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 1s ease-in;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,255,0,0.03) 0px,
+                rgba(0,255,0,0.03) 1px,
+                transparent 1px,
+                transparent 4px
+            );
+            mix-blend-mode: screen;
+        }
+
+        /* Layer 3 — Final blackout */
+        #blackout-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 9200;
+            opacity: 0;
+            pointer-events: none;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #0f0;
-            font-family: monospace;
-            font-size: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: #00FF41;
+            line-height: 2;
+            letter-spacing: 2px;
+            transition: opacity 0.6s ease-in;
         }
 
-        @keyframes screen-glitch {
-            0% { opacity: 0; }
-            10% { opacity: 0.8; filter: invert(1); }
-            20% { opacity: 0; }
-            30% { opacity: 0.9; transform: translateX(5px); }
-            40% { opacity: 0; }
-            50% { opacity: 1; filter: sepia(1); }
-            100% { opacity: 0; }
+        #blackout-overlay .terminal-line {
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #blackout-overlay .terminal-line.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .glitching {
-            animation: screen-glitch 0.4s linear;
+        /* "Trop tard." dramatic text */
+        #trop-tard {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9300;
+            font-family: 'Courier New', monospace;
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #FF0000;
+            letter-spacing: 6px;
+            opacity: 0;
+            pointer-events: none;
+            text-shadow: 0 0 30px rgba(255,0,0,0.8);
+            transition: opacity 0.4s ease;
+        }
+
+        /* Body glitch animation when button is clicked */
+        @keyframes body-shake {
+            0%   { transform: translateX(0); filter: none; }
+            10%  { transform: translateX(-4px); filter: invert(1) hue-rotate(90deg); }
+            20%  { transform: translateX(4px);  filter: invert(0); }
+            30%  { transform: translateX(-6px); filter: sepia(1) saturate(5); }
+            40%  { transform: translateX(6px);  filter: invert(1); }
+            50%  { transform: translateX(-3px); filter: none; }
+            60%  { transform: translateX(3px);  filter: invert(1) hue-rotate(180deg); }
+            70%  { transform: translateX(-2px); filter: none; }
+            80%  { transform: translateX(2px);  filter: invert(1); }
+            90%  { transform: translateX(-1px); filter: none; }
+            100% { transform: translateX(0);    filter: none; }
+        }
+
+        body.glitching {
+            animation: body-shake 0.6s linear forwards;
         }
 
     </style>
 </head>
 <body>
 
+    <!-- ===================== TRANSITION LAYERS ===================== -->
+    <div id="flicker-overlay"></div>
+    <div id="glitch-overlay"></div>
+    <div id="trop-tard">Trop tard.</div>
+    <div id="blackout-overlay">
+        <div class="terminal-line" id="tl1">&gt; CONNEXION ÉTABLIE...</div>
+        <div class="terminal-line" id="tl2">&gt; COLLECTE DE DONNÉES EN COURS...</div>
+        <div class="terminal-line" id="tl3">&gt; CYBER_TRAP: ACT_1_COMPLETE</div>
+        <div class="terminal-line" id="tl4" style="color:#FF0000;">&gt; INITIALIZING ACT_2...</div>
+    </div>
+    <!-- ============================================================= -->
+
     <!-- Header -->
     <div class="header">
         <div class="header-left">
-            <!-- FB Logo SVG -->
-            <svg class="fb-logo" viewBox="0 0 36 36" fill="url(#jsc_c_2)">
-                <defs><linearGradient x1="50%" x2="50%" y1="97.0782153%" y2="0%" id="jsc_c_2"><stop offset="0%" stop-color="#0062E0"></stop><stop offset="100%" stop-color="#19AFFF"></stop></linearGradient></defs>
-                <path d="M15 35.8C6.5 34.3 0 26.9 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 8.9-6.5 16.3-15 17.8l-1-.8h-4l-1 .8z"></path>
-                <path fill="#fff" d="M25 23l.8-5H21v-3.5c0-1.4.5-2.5 2.7-2.5H26V7.4c-1.3-.2-2.7-.4-4-.4-4.1 0-7 2.5-7 7v4h-4.5v5H15v12.7c1 .2 2 .3 3 .3s2-.1 3-.3V23h4z"></path>
+            <svg class="fb-logo" viewBox="0 0 36 36" fill="url(#fb-grad)">
+                <defs>
+                    <linearGradient x1="50%" x2="50%" y1="97%" y2="0%" id="fb-grad">
+                        <stop offset="0%" stop-color="#0062E0"/>
+                        <stop offset="100%" stop-color="#19AFFF"/>
+                    </linearGradient>
+                </defs>
+                <path d="M15 35.8C6.5 34.3 0 26.9 0 18 0 8.1 8.1 0 18 0s18 8.1 18 18c0 8.9-6.5 16.3-15 17.8l-1-.8h-4l-1 .8z"/>
+                <path fill="#fff" d="M25 23l.8-5H21v-3.5c0-1.4.5-2.5 2.7-2.5H26V7.4c-1.3-.2-2.7-.4-4-.4-4.1 0-7 2.5-7 7v4h-4.5v5H15v12.7c1 .2 2 .3 3 .3s2-.1 3-.3V23h4z"/>
             </svg>
             <div class="search-bar">🔍 &nbsp; Recherche Facebook</div>
         </div>
-        
         <div class="header-right">
             <div class="icon-btn">💬</div>
             <div class="icon-btn">🔔</div>
             <div class="icon-btn">
-                <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" style="border-radius:50%; width: 28px;">
+                <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" style="border-radius:50%; width:28px;">
             </div>
         </div>
     </div>
 
     <div class="main-container">
-        
+
         <!-- Left Sidebar -->
         <div class="sidebar sidebar-left">
             <div class="nav-item">
@@ -342,8 +326,8 @@
 
         <!-- Center Feed -->
         <div class="feed">
-            
-            <!-- Create Post Box (Visual Only) -->
+
+            <!-- Create Post Box -->
             <div class="post">
                 <div style="padding: 12px 16px; display: flex; gap: 10px; border-bottom: 1px solid #CED0D4;">
                     <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="user-avatar">
@@ -360,9 +344,7 @@
                         <div class="post-meta">2 h · 🌍</div>
                     </div>
                 </div>
-                <div class="post-content" dir="rtl">
-                    Saha ftourkom el jami3 🌙❤️ #Ramadan #Tunisie
-                </div>
+                <div class="post-content" dir="rtl">Saha ftourkom el jami3 🌙❤️ #Ramadan #Tunisie</div>
                 <div class="post-stats">
                     <span>👍 ❤️ 847</span>
                     <span>124 commentaires · 32 partages</span>
@@ -384,8 +366,7 @@
                     </div>
                 </div>
                 <div class="post-content">
-                    Attention aux arnaques sur internet!! Mon ami s'est fait avoir hier 😡<br>
-                    Restez vigilants les amis.
+                    Attention aux arnaques sur internet!! Mon ami s'est fait avoir hier 😡<br>Restez vigilants les amis.
                 </div>
                 <div class="post-stats">
                     <span>😡 👍 234</span>
@@ -398,31 +379,28 @@
                 </div>
             </div>
 
-            <!-- THE TRAP AD (Ooredoo) -->
-            <div class="post" style="border: 1px solid rgba(228, 0, 43, 0.2);">
+            <!-- THE TRAP AD -->
+            <div class="post" style="border: 1px solid rgba(228,0,43,0.2);">
                 <div class="post-header">
-                    <!-- Ooredoo Logo Placeholder -->
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #E4002B; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px;">O</div>
+                    <div style="width:40px; height:40px; border-radius:50%; background:#E4002B; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-right:10px; font-size:18px;">O</div>
                     <div class="post-info">
                         <h4 class="ad-brand">Ooredoo 🇹🇳</h4>
                         <div class="post-meta">
                             <span class="sponsored-label">Sponsorisé</span> · 🌍
                         </div>
                     </div>
-                    <div style="margin-left: auto; color: var(--fb-text-secondary);">...</div>
+                    <div style="margin-left:auto; color:var(--fb-text-secondary); font-size:20px; cursor:pointer;">···</div>
                 </div>
-                
+
                 <div class="post-content">
                     <div class="ad-headline">🎉 مبروك! أنت من المحظوظين!</div>
                     <p>Ooredoo offre 50 smartphones Samsung Galaxy à ses abonnés fidèles. Vous avez été sélectionné pour gagner!</p>
                 </div>
 
-                <!-- Product Image -->
                 <img src="https://picsum.photos/seed/phone/600/350" class="post-image" alt="Prize Phone">
 
-                <!-- Countdown Timer -->
                 <div class="ad-countdown-container">
-                    ⚠️ Offre expire dans: <span id="countdown">09:47</span>
+                    ⚠️ Offre expire dans: <span id="countdown" style="font-size:1.1em;">09:47</span>
                 </div>
 
                 <div id="trap-btn" class="ad-cta-btn">
@@ -434,23 +412,22 @@
                     <span>892 commentaires · 1.2K partages</span>
                 </div>
 
-                <!-- Fake Comments Section -->
                 <div class="fake-comments">
-                    <div style="display: flex; margin-bottom: 8px;">
+                    <div style="display:flex; margin-bottom:8px;">
                         <img src="https://ui-avatars.com/api/?name=Rim+B&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
                         <div class="comment-bubble">
                             <span class="comment-author">Rim B.</span>
                             J'ai reçu le mien hier, c'est vrai !! Merci Ooredoo ❤️
                         </div>
                     </div>
-                    <div style="display: flex; margin-bottom: 8px;">
+                    <div style="display:flex; margin-bottom:8px;">
                         <img src="https://ui-avatars.com/api/?name=Khalil+M&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
                         <div class="comment-bubble">
                             <span class="comment-author">Khalil M.</span>
                             Barcha 5ater Ooredoo 🙏
                         </div>
                     </div>
-                    <div style="display: flex; margin-bottom: 8px;">
+                    <div style="display:flex; margin-bottom:8px;">
                         <img src="https://ui-avatars.com/api/?name=Sara+T&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
                         <div class="comment-bubble">
                             <span class="comment-author">Sara T.</span>
@@ -469,9 +446,7 @@
                         <div class="post-meta">Hier · 🌍</div>
                     </div>
                 </div>
-                <div class="post-content">
-                    Weekend à Sidi Bou Said 😍☀️
-                </div>
+                <div class="post-content">Weekend à Sidi Bou Said 😍☀️</div>
                 <img src="https://picsum.photos/seed/sidibousaid/600/400" class="post-image" alt="Sidi Bou Said">
                 <div class="post-stats">
                     <span>❤️ 👍 1.2K</span>
@@ -509,93 +484,142 @@
 
         </div>
 
-        <!-- Right Sidebar (Contacts) -->
+        <!-- Right Sidebar -->
         <div class="sidebar sidebar-right">
             <div class="contact-header">Contacts en ligne</div>
-            
             <div class="nav-item">
                 <div style="position:relative;">
                     <img src="https://ui-avatars.com/api/?name=Ali+Ben+Salah" class="nav-icon" style="margin:0;">
                     <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
                 </div>
-                <span style="margin-left: 12px;">Ali Ben Salah</span>
+                <span style="margin-left:12px;">Ali Ben Salah</span>
             </div>
-            
             <div class="nav-item">
                 <div style="position:relative;">
                     <img src="https://ui-avatars.com/api/?name=Mariem+K" class="nav-icon" style="margin:0;">
                     <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
                 </div>
-                <span style="margin-left: 12px;">Mariem K</span>
+                <span style="margin-left:12px;">Mariem K</span>
             </div>
-
             <div class="nav-item">
                 <div style="position:relative;">
                     <img src="https://ui-avatars.com/api/?name=Youssef+T" class="nav-icon" style="margin:0;">
                     <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
                 </div>
-                <span style="margin-left: 12px;">Youssef T</span>
+                <span style="margin-left:12px;">Youssef T</span>
             </div>
         </div>
 
     </div>
 
-    <!-- FX Overlays -->
-    <div id="flicker" class="flicker-overlay"></div>
-    <div id="blackout" class="blackout-overlay">
-        > CYBER_TRAP: ACT_1_COMPLETE<br>
-        > INITIALIZING ACT_2...
-    </div>
-
     <script>
-        // 1. Countdown Logic
-        let timeInSecs = 587; // 9 minutes 47 seconds
-        const timerElement = document.getElementById('countdown');
+        // ─── 1. Countdown Timer ───────────────────────────────────────
+        let timeInSecs = 587;
+        const timerEl = document.getElementById('countdown');
 
         const ticker = setInterval(() => {
             timeInSecs--;
-            if (timeInSecs < 0) {
+            if (timeInSecs <= 0) {
                 clearInterval(ticker);
-                timerElement.innerText = "00:00";
+                timerEl.innerText = "00:00";
                 return;
             }
-            
             const m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
             const s = (timeInSecs % 60).toString().padStart(2, '0');
-            timerElement.innerText = `${m}:${s}`;
+            timerEl.innerText = `${m}:${s}`;
         }, 1000);
 
 
-        // 2. Trap Interaction Logic
-        const trapBtn = document.getElementById('trap-btn');
-        const flickerOverlay = document.getElementById('flicker');
-        const blackoutOverlay = document.getElementById('blackout');
+        // ─── 2. Web Audio — Glitch Sound ─────────────────────────────
+        function playGlitchSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(80, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.3);
+                gain.gain.setValueAtTime(0.4, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.4);
+            } catch(e) {}
+        }
+
+
+        // ─── 3. Transition Sequence ───────────────────────────────────
+        const trapBtn       = document.getElementById('trap-btn');
+        const flickerEl     = document.getElementById('flicker-overlay');
+        const glitchEl      = document.getElementById('glitch-overlay');
+        const blackoutEl    = document.getElementById('blackout-overlay');
+        const tropTardEl    = document.getElementById('trop-tard');
+        const termLines     = document.querySelectorAll('.terminal-line');
+
+        let transitioning = false; // prevent double-clicks
 
         trapBtn.addEventListener('click', () => {
-            // Visual feedback that click registered
-            trapBtn.innerText = "Traitement en cours...";
-            trapBtn.style.background = "#333";
+            if (transitioning) return;
+            transitioning = true;
+
+            // Disable button immediately
+            trapBtn.innerText = "⏳ Traitement en cours...";
+            trapBtn.style.background = "#555";
             trapBtn.style.animation = "none";
+            trapBtn.style.cursor = "not-allowed";
 
-            // Delay slightly to feel like 'loading' then BAM
+            // ── Step 1 (300ms): Body shakes + glitch overlay flashes ──
             setTimeout(() => {
-                // Trigger visual glitch
-                flickerOverlay.classList.add('glitching');
-                
-                // After glitch, go black
-                setTimeout(() => {
-                    blackoutOverlay.style.opacity = '1';
-                    
-                    // Trigger Act 2 Transition
-                    setTimeout(() => {
-                        // In a real scenario: window.location.href = 'act2.html';
-                        // For this demo, we alert or log
-                        console.log("Simulating navigation to Act 2...");
-                    }, 2000);
+                playGlitchSound();
+                document.body.classList.add('glitching');
+                glitchEl.style.opacity = '1';
 
-                }, 400); // Wait for glitch to run halfway
+                // Rapid white flicker bursts
+                let flickers = 0;
+                const flickerInterval = setInterval(() => {
+                    flickerEl.style.opacity = flickerEl.style.opacity === '0' ? '0.85' : '0';
+                    flickers++;
+                    if (flickers >= 6) {
+                        clearInterval(flickerInterval);
+                        flickerEl.style.opacity = '0';
+                    }
+                }, 80);
 
             }, 300);
+
+            // ── Step 2 (950ms): Remove glitch, fade in blackout ──────
+            setTimeout(() => {
+                document.body.classList.remove('glitching');
+                glitchEl.style.opacity = '0';
+                blackoutEl.style.opacity = '1';
+                blackoutEl.style.pointerEvents = 'all';
+            }, 950);
+
+            // ── Step 3 (1600ms): "Trop tard." fades in ──────────────
+            setTimeout(() => {
+                tropTardEl.style.opacity = '1';
+            }, 1600);
+
+            // ── Step 4 (2900ms): "Trop tard." fades out ─────────────
+            setTimeout(() => {
+                tropTardEl.style.opacity = '0';
+            }, 2900);
+
+            // ── Step 5 (3300ms): Terminal lines appear one by one ────
+            setTimeout(() => {
+                termLines.forEach((line, i) => {
+                    setTimeout(() => {
+                        line.classList.add('show');
+                    }, i * 400);
+                });
+            }, 3300);
+
+            // ── Step 6 (5200ms): Navigate to act2.html ───────────────
+            setTimeout(() => {
+                window.location.href = 'act2.html';
+            }, 5200);
+
         });
     </script>
 </body>
