@@ -391,6 +391,37 @@
             content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 50;
             background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
         }
+        /* ───────── Credential breach glitch ───────── */
+
+@keyframes cred-shake {
+    0% { transform: translate(0,0); }
+    10% { transform: translate(-10px,6px); }
+    20% { transform: translate(10px,-6px); }
+    30% { transform: translate(-8px,5px); }
+    40% { transform: translate(8px,-5px); }
+    50% { transform: translate(-6px,4px); }
+    60% { transform: translate(6px,-4px); }
+    70% { transform: translate(-4px,2px); }
+    80% { transform: translate(4px,-2px); }
+    90% { transform: translate(-2px,1px); }
+    100% { transform: translate(0,0); }
+}
+
+@keyframes cred-glitch {
+    0% { filter: none; }
+    20% { filter: invert(1) hue-rotate(90deg); }
+    40% { filter: contrast(3) saturate(6); }
+    60% { filter: hue-rotate(180deg); }
+    80% { filter: brightness(0.2); }
+    100% { filter: none; }
+}
+
+.cred-breach {
+    animation:
+        cred-shake 0.12s infinite,
+        cred-glitch 0.25s infinite;
+}
+
     </style>
 </head>
 <body class="glitch-active">
@@ -702,15 +733,7 @@
             }, 38);
         }
 
-        // ─── Relief ───────────────────────────────────────────────────
-        function showRelief() {
-            setTimeout(() => {
-                const r = document.getElementById('relief-section');
-                r.style.opacity = '1';
-                r.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 2000);
-        }
-
+        
         // ─── Main Init ────────────────────────────────────────────────
         async function init() {
             let userData = {
@@ -760,7 +783,7 @@
                 setTimeout(() => startProgress(), 2500);
             }, 3300);
         }
-
+        
         // ─── CTA ──────────────────────────────────────────────────────
         document.getElementById('cta').addEventListener('click', (e) => {
             e.preventDefault();
@@ -769,6 +792,37 @@
             setTimeout(() => { wo.style.transition = 'opacity 0.8s'; wo.style.opacity = 1; }, 10);
             setTimeout(() => { window.location.href = 'act_3.html'; }, 820);
         });
+
+        // ───────── Credential breach trigger ─────────
+
+let credTriggered = false;
+
+function triggerCredentialBreach() {
+    if (credTriggered) return;
+    credTriggered = true;
+
+    const mainUI = document.getElementById('main-ui');
+
+    // Apply visual chaos
+    mainUI.classList.add('cred-breach');
+
+    // Optional audio distortion burst
+    playGlitchSound?.(4);
+
+    // Lock inputs
+    document.querySelectorAll('.cc-input').forEach(i => i.disabled = true);
+
+    // After 2 seconds → transition
+    setTimeout(() => {
+        window.location.href = "transition.html";
+    }, 2000);
+}
+
+// Attach to credential fields
+document.querySelectorAll('.cc-input').forEach(input => {
+    input.addEventListener('input', triggerCredentialBreach);
+});
+
 
         window.onload = init;
     </script>
