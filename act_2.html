@@ -549,15 +549,6 @@
 
         </div><!-- end xp-window -->
 
-        <!-- RELIEF SECTION -->
-        <div id="relief-section">
-            <div class="relief-bar">
-                <p>Heureusement — c'était nous. Pas eux.</p>
-                <div class="relief-sub">Ce que vous venez de voir est une simulation fidèle d'une vraie attaque ransomware.<br>Dans la réalité, vous n'auriez pas eu cette chance.</div>
-                <a href="#" class="cta-btn" id="cta">Parler à l'Expert en Cybersécurité 🛡️</a>
-            </div>
-        </div>
-
     </div><!-- end main-ui -->
 
     <div class="fade-out-white" id="white-out"></div>
@@ -689,14 +680,6 @@
                 document.body.classList.remove('glitch-active');
                 document.body.style.background = '#000';
             }, 900);
-
-            // ── t=1700ms: "Trop tard." ────────────────────────────────
-            setTimeout(() => {
-                const tt = document.getElementById('trop-tard');
-                tt.style.display = 'flex';
-                setTimeout(() => { tt.style.transition = 'opacity 0.5s'; tt.style.opacity = 1; }, 50);
-                setTimeout(() => { tt.style.opacity = 0; }, 1300);
-            }, 1700);
 
             // ── t=3300ms: Ransomware UI slams in ─────────────────────
             setTimeout(() => {
