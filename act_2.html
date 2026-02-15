@@ -424,6 +424,7 @@
 
         /* ───────── Guardian Intervention Modal ───────── */
 
+/* Replace the existing #guardian-modal CSS with this: */
 #guardian-modal {
     position: fixed;
     inset: 0;
@@ -431,13 +432,14 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    pointer-events: none;
+    pointer-events: none; /* Keep this to allow clicks through when hidden */
     opacity: 0;
     transition: opacity 0.4s ease;
 }
 
 #guardian-modal.show {
     opacity: 1;
+    pointer-events: auto; /* ADD THIS - enables interaction when visible */
 }
 
 .guardian-wrap {
@@ -863,6 +865,18 @@
         }
         // ───────── Credential breach trigger ─────────
 
+function showGuardian() {
+    const modal = document.getElementById('guardian-modal');
+    modal.classList.add('show');
+    
+    // Stop the glitch effect on main UI so user can see clearly
+    const mainUI = document.getElementById('main-ui');
+    mainUI.classList.remove('cred-breach');
+    
+    // Optional: freeze timers to reduce anxiety
+    clearInterval(window.timerInterval);
+}
+        
 let credTriggered = false;
 
 function triggerCredentialBreach() {
@@ -884,10 +898,7 @@ function triggerCredentialBreach() {
         window.location.href = "transition.html";
     }, 2000);
 }
-function showGuardian() {
-    const modal = document.getElementById('guardian-modal');
-    modal.classList.add('show');
-}
+
 
 
 // Attach to credential fields
