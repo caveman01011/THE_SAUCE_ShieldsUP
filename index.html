@@ -16,95 +16,43 @@
             --fb-divider: #CED0D4;
             --ooredoo-red: #E4002B;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             background-color: var(--fb-bg);
             color: var(--fb-text-primary);
             overflow-x: hidden;
         }
-
-        /* --- Header --- */
         .header {
-            background: var(--fb-header-bg);
-            height: 56px;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            z-index: 100;
+            background: var(--fb-header-bg); height: 56px; width: 100%;
+            position: fixed; top: 0; z-index: 100;
             box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 16px;
+            display: flex; justify-content: space-between; align-items: center; padding: 0 16px;
         }
         .header-left { display: flex; align-items: center; gap: 10px; }
         .fb-logo { width: 40px; height: 40px; }
         .search-bar {
-            background: #F0F2F5;
-            border-radius: 50px;
-            padding: 9px 16px;
-            display: flex;
-            align-items: center;
-            width: 240px;
-            color: var(--fb-text-secondary);
-            font-size: 15px;
+            background: #F0F2F5; border-radius: 50px; padding: 9px 16px;
+            display: flex; align-items: center; width: 240px;
+            color: var(--fb-text-secondary); font-size: 15px;
         }
         .header-right { display: flex; gap: 8px; }
         .icon-btn {
-            width: 40px; height: 40px;
-            background: #E4E6EB;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
+            width: 40px; height: 40px; background: #E4E6EB; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
         }
         .icon-btn:hover { background: #D8DADF; }
-
-        /* --- Layout --- */
-        .main-container {
-            display: flex;
-            justify-content: center;
-            padding-top: 72px;
-            min-height: 100vh;
-        }
-        .sidebar {
-            width: 360px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 0 8px;
-            display: none;
-        }
+        .main-container { display: flex; justify-content: center; padding-top: 72px; min-height: 100vh; }
+        .sidebar { width: 360px; position: fixed; height: 100vh; overflow-y: auto; padding: 0 8px; display: none; }
         .sidebar-left { left: 0; top: 56px; }
         .sidebar-right { right: 0; top: 56px; width: 280px; }
         @media (min-width: 1100px) { .sidebar { display: block; } }
         .feed { width: 100%; max-width: 590px; margin: 0 32px; }
-
-        /* --- Sidebar Items --- */
-        .nav-item {
-            display: flex; align-items: center;
-            padding: 8px; border-radius: 8px;
-            cursor: pointer; font-weight: 600; font-size: 15px;
-        }
+        .nav-item { display: flex; align-items: center; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px; }
         .nav-item:hover { background: var(--fb-hover); }
         .nav-icon { width: 36px; height: 36px; border-radius: 50%; margin-right: 12px; }
-        .contact-header {
-            color: var(--fb-text-secondary);
-            font-weight: 600;
-            margin: 20px 8px 8px;
-            font-size: 17px;
-        }
-
-        /* --- Posts --- */
-        .post {
-            background: var(--fb-card-bg);
-            border-radius: 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            margin-bottom: 16px;
-            padding-bottom: 4px;
-        }
+        .contact-header { color: var(--fb-text-secondary); font-weight: 600; margin: 20px 8px 8px; font-size: 17px; }
+        .post { background: var(--fb-card-bg); border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); margin-bottom: 16px; padding-bottom: 4px; }
         .post-header { padding: 12px 16px 0; display: flex; margin-bottom: 12px; }
         .user-avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
         .post-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
@@ -112,136 +60,123 @@
         .post-content { font-size: 15px; padding: 0 16px 16px; line-height: 1.4; }
         .post-content[dir="rtl"] { text-align: right; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .post-image { width: 100%; height: auto; display: block; border-top: 1px solid var(--fb-divider); border-bottom: 1px solid var(--fb-divider); }
-        .post-stats {
-            padding: 10px 16px;
-            display: flex; justify-content: space-between;
-            color: var(--fb-text-secondary); font-size: 15px;
-            border-bottom: 1px solid var(--fb-divider);
-            margin: 0 16px;
-        }
+        .post-stats { padding: 10px 16px; display: flex; justify-content: space-between; color: var(--fb-text-secondary); font-size: 15px; border-bottom: 1px solid var(--fb-divider); margin: 0 16px; }
         .post-actions { display: flex; padding: 4px 16px; }
-        .action-btn {
-            flex: 1; display: flex; align-items: center; justify-content: center;
-            height: 36px; border-radius: 4px;
-            color: var(--fb-text-secondary); font-weight: 600;
-            cursor: pointer; gap: 8px; font-size: 15px;
-        }
+        .action-btn { flex: 1; display: flex; align-items: center; justify-content: center; height: 36px; border-radius: 4px; color: var(--fb-text-secondary); font-weight: 600; cursor: pointer; gap: 8px; font-size: 15px; }
         .action-btn:hover { background: var(--fb-hover); }
-
-        /* --- Ad Styles --- */
-        .sponsored-label { font-size: 13px; color: var(--fb-text-secondary); font-weight: 400; }
-        .ad-brand { color: var(--ooredoo-red); font-weight: 800; }
-        .ad-headline { font-size: 20px; font-weight: bold; margin-bottom: 8px; text-align: right; direction: rtl; }
-        .ad-countdown-container {
+        /* ── Popup Ad ────────────────────────────────────────────── */
+        #popup-ad {
+            position: fixed;
+            bottom: -340px;
+            right: 24px;
+            width: 310px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 500;
+            overflow: hidden;
+            transition: bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid #e0e0e0;
+        }
+        #popup-ad.visible { bottom: 24px; }
+        .popup-topbar {
+            background: #E4002B; padding: 8px 12px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .popup-brand { color: white; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .popup-close {
+            color: rgba(255,255,255,0.75); font-size: 20px; cursor: pointer;
+            line-height: 1; padding: 0 2px; transition: color 0.15s;
+            font-weight: 300;
+        }
+        .popup-close:hover { color: white; }
+        .popup-body { padding: 12px; }
+        .popup-headline { font-size: 16px; font-weight: 800; color: #E4002B; text-align: center; direction: rtl; margin-bottom: 5px; }
+        .popup-sub { font-size: 11.5px; color: #555; text-align: center; margin-bottom: 10px; line-height: 1.4; }
+        .popup-img { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; margin-bottom: 10px; display: block; }
+        .popup-countdown {
             background: #fff5f5; border: 1px solid #ffccd5; color: #d80027;
-            padding: 8px; text-align: center; border-radius: 6px;
-            margin: 10px 16px; font-weight: bold;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
+            border-radius: 5px; padding: 5px 10px; font-size: 12px; font-weight: 700;
+            display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 10px;
         }
-        .ad-cta-btn {
-            background: var(--ooredoo-red); color: white;
-            text-align: center; padding: 12px;
-            margin: 10px 16px; border-radius: 6px;
-            font-weight: bold; font-size: 16px; cursor: pointer;
-            animation: pulse-red 2s infinite;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-            user-select: none;
+        #trap-btn {
+            background: #E4002B; color: white; text-align: center;
+            padding: 11px; border-radius: 6px; font-weight: bold;
+            font-size: 13px; cursor: pointer; animation: pulse-red 2s infinite;
+            display: flex; justify-content: center; align-items: center; gap: 6px;
+            user-select: none; width: 100%; border: none;
         }
-        .ad-cta-btn:hover { background: #c40024; }
+        #trap-btn:hover { background: #c40024; }
         @keyframes pulse-red {
             0%   { box-shadow: 0 0 0 0 rgba(228,0,43,0.7); transform: scale(1); }
-            70%  { box-shadow: 0 0 0 10px rgba(228,0,43,0); transform: scale(1.02); }
+            70%  { box-shadow: 0 0 0 8px rgba(228,0,43,0); transform: scale(1.02); }
             100% { box-shadow: 0 0 0 0 rgba(228,0,43,0); transform: scale(1); }
         }
-        .fake-comments { background: #F0F2F5; padding: 10px 16px; margin-top: 5px; }
-        .comment-bubble {
-            background: #fff; border-radius: 18px;
-            padding: 8px 12px; display: inline-block;
-            margin-bottom: 8px; font-size: 13px;
-        }
-        .comment-author { font-weight: 600; display: block; margin-bottom: 2px; }
+        .popup-footer { font-size: 10px; color: #bbb; text-align: center; margin-top: 8px; }
 
-        /* ============================================
-           TRANSITION OVERLAYS
-        ============================================ */
-
-        /* Layer 1 — Glitch flicker (white flash) */
-        #flicker-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            z-index: 9000;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        /* Layer 2 — Full page glitch distortion */
+        /* ── Transition Overlays ─────────────────────────────────── */
+        #flicker-overlay { position: fixed; inset: 0; background: white; z-index: 9000; opacity: 0; pointer-events: none; }
         #glitch-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9100;
-            opacity: 0;
-            pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0,255,0,0.03) 0px,
-                rgba(0,255,0,0.03) 1px,
-                transparent 1px,
-                transparent 4px
-            );
+            position: fixed; inset: 0; z-index: 9100; opacity: 0; pointer-events: none;
+            background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 1px, transparent 1px, transparent 4px);
             mix-blend-mode: screen;
         }
-
-        /* Layer 3 — Final blackout */
         #blackout-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000;
-            z-index: 9200;
-            opacity: 0;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            color: #00FF41;
-            line-height: 2;
-            letter-spacing: 2px;
+            position: fixed; inset: 0; background: #000; z-index: 9200;
+            opacity: 0; pointer-events: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Courier New', monospace; font-size: 1rem;
+            color: #00FF41; line-height: 2; letter-spacing: 2px;
             transition: opacity 0.6s ease-in;
         }
-
-        #blackout-overlay .terminal-line {
-            opacity: 0;
-            transform: translateY(4px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        #blackout-overlay .terminal-line.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* "Trop tard." dramatic text */
+        #blackout-overlay .terminal-line { opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; }
+        #blackout-overlay .terminal-line.show { opacity: 1; transform: translateY(0); }
         #trop-tard {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9300;
-            font-family: 'Courier New', monospace;
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #FF0000;
-            letter-spacing: 6px;
-            opacity: 0;
-            pointer-events: none;
-            text-shadow: 0 0 30px rgba(255,0,0,0.8);
-            transition: opacity 0.4s ease;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 9300; font-family: 'Courier New', monospace; font-size: 2.8rem;
+            font-weight: bold; color: #FF0000; letter-spacing: 6px;
+            opacity: 0; pointer-events: none;
+            text-shadow: 0 0 30px rgba(255,0,0,0.8); transition: opacity 0.4s ease;
         }
 
-        /* Body glitch animation when button is clicked */
+        /* ── CMD Window ──────────────────────────────────────────── */
+        #cmd-window {
+            position: fixed;
+            bottom: 80px; right: 80px;
+            width: 530px;
+            background: #0C0C0C;
+            border: 1px solid #666;
+            z-index: 9500;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #CCCCCC;
+            box-shadow: 4px 4px 20px rgba(0,0,0,0.95);
+            display: none;
+            opacity: 1;
+        }
+        .cmd-titlebar {
+            background: #1a1a1a; padding: 5px 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid #333;
+        }
+        .cmd-title-left { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #bbb; }
+        .cmd-icon { font-size: 13px; }
+        .cmd-controls { display: flex; }
+        .cmd-ctrl {
+            width: 46px; height: 22px; display: flex; align-items: center; justify-content: center;
+            font-size: 10px; color: #ccc; cursor: default; transition: background 0.1s;
+        }
+        .cmd-ctrl:hover { background: #404040; }
+        .cmd-ctrl.close:hover { background: #c42b1c; color: white; }
+        .cmd-body { padding: 8px 12px; line-height: 1.75; min-height: 150px; }
+        .cmd-white  { color: #FFFFFF; }
+        .cmd-green  { color: #00FF41; }
+        .cmd-gray   { color: #AAAAAA; }
+        .cmd-prompt { color: #CCCCCC; }
+
+        /* Body glitch */
         @keyframes body-shake {
-            0%   { transform: translateX(0); filter: none; }
+            0%   { transform: translateX(0);    filter: none; }
             10%  { transform: translateX(-4px); filter: invert(1) hue-rotate(90deg); }
             20%  { transform: translateX(4px);  filter: invert(0); }
             30%  { transform: translateX(-6px); filter: sepia(1) saturate(5); }
@@ -253,16 +188,12 @@
             90%  { transform: translateX(-1px); filter: none; }
             100% { transform: translateX(0);    filter: none; }
         }
-
-        body.glitching {
-            animation: body-shake 0.6s linear forwards;
-        }
-
+        body.glitching { animation: body-shake 0.6s linear forwards; }
     </style>
 </head>
 <body>
 
-    <!-- ===================== TRANSITION LAYERS ===================== -->
+    <!-- Transition Layers -->
     <div id="flicker-overlay"></div>
     <div id="glitch-overlay"></div>
     <div id="trop-tard">Trop tard.</div>
@@ -272,7 +203,54 @@
         <div class="terminal-line" id="tl3">&gt; CYBER_TRAP: ACT_1_COMPLETE</div>
         <div class="terminal-line" id="tl4" style="color:#FF0000;">&gt; INITIALIZING ACT_2...</div>
     </div>
-    <!-- ============================================================= -->
+
+    <!-- CMD Window -->
+    <div id="cmd-window">
+        <div class="cmd-titlebar">
+            <div class="cmd-title-left">
+                <span class="cmd-icon">⬛</span>
+                <span>C:\Windows\System32\cmd.exe</span>
+            </div>
+            <div class="cmd-controls">
+                <div class="cmd-ctrl">&#8722;</div>
+                <div class="cmd-ctrl">&#9633;</div>
+                <div class="cmd-ctrl close">&#10005;</div>
+            </div>
+        </div>
+        <div class="cmd-body">
+            <div class="cmd-gray">Microsoft Windows [Version 10.0.19045.4170]</div>
+            <div class="cmd-gray">(c) Microsoft Corporation. Tous droits réservés.</div>
+            <br>
+            <div><span class="cmd-prompt">C:\Users\Mohamed&gt; </span><span class="cmd-white">net user backdoor Tr0jan@2024 /add</span></div>
+            <div class="cmd-green">La commande s'est terminée correctement.</div>
+            <br>
+            <div><span class="cmd-prompt">C:\Users\Mohamed&gt; </span><span class="cmd-white">reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v svchost32 /d "C:\backdoor.exe" /f</span></div>
+            <div class="cmd-green">L'opération s'est terminée correctement.</div>
+            <br>
+            <div><span class="cmd-prompt">C:\Users\Mohamed&gt; </span><span class="cmd-white">exit</span></div>
+        </div>
+    </div>
+
+    <!-- ── Popup Ad (the trap) ──────────────────────────────────── -->
+    <div id="popup-ad">
+        <div class="popup-topbar">
+            <div class="popup-brand">
+                <span style="background:white;color:#E4002B;font-weight:900;border-radius:3px;padding:1px 5px;font-size:12px;">O</span>
+                Ooredoo Tunisie 🇹🇳
+            </div>
+            <div class="popup-close" id="popup-close-btn">&times;</div>
+        </div>
+        <div class="popup-body">
+            <div class="popup-headline">🎉 مبروك! أنت من المحظوظين!</div>
+            <div class="popup-sub">Vous avez été sélectionné parmi nos abonnés fidèles pour gagner un Samsung Galaxy S24 !</div>
+            <img src="https://picsum.photos/seed/samsung/310/120" class="popup-img" alt="Prix">
+            <div class="popup-countdown">
+                ⏱️ Offre expire dans: <span id="countdown" style="font-weight:900;">09:47</span>
+            </div>
+            <button id="trap-btn">🎁 Réclamer mon prix maintenant</button>
+            <div class="popup-footer">Sponsorisé · Ooredoo S.A. · Tunis</div>
+        </div>
+    </div>
 
     <!-- Header -->
     <div class="header">
@@ -299,56 +277,33 @@
     </div>
 
     <div class="main-container">
-
         <!-- Left Sidebar -->
         <div class="sidebar sidebar-left">
-            <div class="nav-item">
-                <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="nav-icon">
-                <span>Mohamed Trabelsi</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" class="nav-icon">
-                <span>Amis</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/166/166258.png" class="nav-icon">
-                <span>Groupes</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="nav-icon">
-                <span>Marketplace</span>
-            </div>
-            <div class="nav-item">
-                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991195.png" class="nav-icon">
-                <span>Watch</span>
-            </div>
+            <div class="nav-item"><img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="nav-icon"><span>Mohamed Trabelsi</span></div>
+            <div class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png" class="nav-icon"><span>Amis</span></div>
+            <div class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/166/166258.png" class="nav-icon"><span>Groupes</span></div>
+            <div class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="nav-icon"><span>Marketplace</span></div>
+            <div class="nav-item"><img src="https://cdn-icons-png.flaticon.com/512/2991/2991195.png" class="nav-icon"><span>Watch</span></div>
         </div>
 
-        <!-- Center Feed -->
+        <!-- Feed -->
         <div class="feed">
-
-            <!-- Create Post Box -->
+            <!-- Create Post -->
             <div class="post">
-                <div style="padding: 12px 16px; display: flex; gap: 10px; border-bottom: 1px solid #CED0D4;">
+                <div style="padding:12px 16px;display:flex;gap:10px;border-bottom:1px solid #CED0D4;">
                     <img src="https://ui-avatars.com/api/?name=Mohamed+Trabelsi&background=random" class="user-avatar">
-                    <div style="background: #F0F2F5; border-radius: 20px; padding: 10px 16px; flex: 1; color: #65676B; cursor: text;">Quoi de neuf, Mohamed ?</div>
+                    <div style="background:#F0F2F5;border-radius:20px;padding:10px 16px;flex:1;color:#65676B;cursor:text;">Quoi de neuf, Mohamed ?</div>
                 </div>
             </div>
 
-            <!-- Post 1: Fatma Belhaj -->
+            <!-- Post 1 -->
             <div class="post">
                 <div class="post-header">
                     <img src="https://ui-avatars.com/api/?name=Fatma+Belhaj&background=e91e63&color=fff" class="user-avatar">
-                    <div class="post-info">
-                        <h4>Fatma Belhaj</h4>
-                        <div class="post-meta">2 h · 🌍</div>
-                    </div>
+                    <div class="post-info"><h4>Fatma Belhaj</h4><div class="post-meta">2 h · 🌍</div></div>
                 </div>
                 <div class="post-content" dir="rtl">Saha ftourkom el jami3 🌙❤️ #Ramadan #Tunisie</div>
-                <div class="post-stats">
-                    <span>👍 ❤️ 847</span>
-                    <span>124 commentaires · 32 partages</span>
-                </div>
+                <div class="post-stats"><span>👍 ❤️ 847</span><span>124 commentaires · 32 partages</span></div>
                 <div class="post-actions">
                     <div class="action-btn">👍 J'aime</div>
                     <div class="action-btn">💬 Commenter</div>
@@ -356,22 +311,14 @@
                 </div>
             </div>
 
-            <!-- Post 2: Aziz Mansour -->
+            <!-- Post 2 -->
             <div class="post">
                 <div class="post-header">
                     <img src="https://ui-avatars.com/api/?name=Aziz+Mansour&background=3f51b5&color=fff" class="user-avatar">
-                    <div class="post-info">
-                        <h4>Aziz Mansour</h4>
-                        <div class="post-meta">4 h · 👥</div>
-                    </div>
+                    <div class="post-info"><h4>Aziz Mansour</h4><div class="post-meta">4 h · 👥</div></div>
                 </div>
-                <div class="post-content">
-                    Attention aux arnaques sur internet!! Mon ami s'est fait avoir hier 😡<br>Restez vigilants les amis.
-                </div>
-                <div class="post-stats">
-                    <span>😡 👍 234</span>
-                    <span>67 commentaires</span>
-                </div>
+                <div class="post-content">Attention aux arnaques sur internet!! Mon ami s'est fait avoir hier 😡<br>Restez vigilants les amis.</div>
+                <div class="post-stats"><span>😡 👍 234</span><span>67 commentaires</span></div>
                 <div class="post-actions">
                     <div class="action-btn">👍 J'aime</div>
                     <div class="action-btn">💬 Commenter</div>
@@ -379,79 +326,30 @@
                 </div>
             </div>
 
-            <!-- THE TRAP AD -->
-            <div class="post" style="border: 1px solid rgba(228,0,43,0.2);">
+            <!-- Post 2b: Replaced ad with normal post -->
+            <div class="post">
                 <div class="post-header">
-                    <div style="width:40px; height:40px; border-radius:50%; background:#E4002B; color:white; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-right:10px; font-size:18px;">O</div>
-                    <div class="post-info">
-                        <h4 class="ad-brand">Ooredoo 🇹🇳</h4>
-                        <div class="post-meta">
-                            <span class="sponsored-label">Sponsorisé</span> · 🌍
-                        </div>
-                    </div>
-                    <div style="margin-left:auto; color:var(--fb-text-secondary); font-size:20px; cursor:pointer;">···</div>
+                    <img src="https://ui-avatars.com/api/?name=Nour+Gharsalli&background=ff9800&color=fff" class="user-avatar">
+                    <div class="post-info"><h4>Nour Gharsalli</h4><div class="post-meta">3 h · 🌍</div></div>
                 </div>
-
-                <div class="post-content">
-                    <div class="ad-headline">🎉 مبروك! أنت من المحظوظين!</div>
-                    <p>Ooredoo offre 50 smartphones Samsung Galaxy à ses abonnés fidèles. Vous avez été sélectionné pour gagner!</p>
-                </div>
-
-                <img src="https://picsum.photos/seed/phone/600/350" class="post-image" alt="Prize Phone">
-
-                <div class="ad-countdown-container">
-                    ⚠️ Offre expire dans: <span id="countdown" style="font-size:1.1em;">09:47</span>
-                </div>
-
-                <div id="trap-btn" class="ad-cta-btn">
-                    🎁 Réclamer mon prix maintenant
-                </div>
-
-                <div class="post-stats">
-                    <span>👍 😮 4.7K</span>
-                    <span>892 commentaires · 1.2K partages</span>
-                </div>
-
-                <div class="fake-comments">
-                    <div style="display:flex; margin-bottom:8px;">
-                        <img src="https://ui-avatars.com/api/?name=Rim+B&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                        <div class="comment-bubble">
-                            <span class="comment-author">Rim B.</span>
-                            J'ai reçu le mien hier, c'est vrai !! Merci Ooredoo ❤️
-                        </div>
-                    </div>
-                    <div style="display:flex; margin-bottom:8px;">
-                        <img src="https://ui-avatars.com/api/?name=Khalil+M&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                        <div class="comment-bubble">
-                            <span class="comment-author">Khalil M.</span>
-                            Barcha 5ater Ooredoo 🙏
-                        </div>
-                    </div>
-                    <div style="display:flex; margin-bottom:8px;">
-                        <img src="https://ui-avatars.com/api/?name=Sara+T&background=random" style="width:30px; height:30px; border-radius:50%; margin-right:8px;">
-                        <div class="comment-bubble">
-                            <span class="comment-author">Sara T.</span>
-                            Comment je participe??
-                        </div>
-                    </div>
+                <div class="post-content">Bonne nouvelle ! J'ai enfin trouvé un appart à Lac 2 🏠✨ Merci à tous pour les conseils</div>
+                <div class="post-stats"><span>👍 ❤️ 312</span><span>58 commentaires</span></div>
+                <div class="post-actions">
+                    <div class="action-btn">👍 J'aime</div>
+                    <div class="action-btn">💬 Commenter</div>
+                    <div class="action-btn">↗️ Partager</div>
                 </div>
             </div>
 
-            <!-- Post 3: Sarra Khalil -->
+            <!-- Post 3 -->
             <div class="post">
                 <div class="post-header">
                     <img src="https://ui-avatars.com/api/?name=Sarra+Khalil&background=009688&color=fff" class="user-avatar">
-                    <div class="post-info">
-                        <h4>Sarra Khalil</h4>
-                        <div class="post-meta">Hier · 🌍</div>
-                    </div>
+                    <div class="post-info"><h4>Sarra Khalil</h4><div class="post-meta">Hier · 🌍</div></div>
                 </div>
                 <div class="post-content">Weekend à Sidi Bou Said 😍☀️</div>
                 <img src="https://picsum.photos/seed/sidibousaid/600/400" class="post-image" alt="Sidi Bou Said">
-                <div class="post-stats">
-                    <span>❤️ 👍 1.2K</span>
-                    <span>89 commentaires</span>
-                </div>
+                <div class="post-stats"><span>❤️ 👍 1.2K</span><span>89 commentaires</span></div>
                 <div class="post-actions">
                     <div class="action-btn">👍 J'aime</div>
                     <div class="action-btn">💬 Commenter</div>
@@ -459,136 +357,129 @@
                 </div>
             </div>
 
-            <!-- Post 4: Hedi Jaziri -->
+            <!-- Post 4 -->
             <div class="post">
                 <div class="post-header">
                     <img src="https://ui-avatars.com/api/?name=Hedi+Jaziri&background=795548&color=fff" class="user-avatar">
-                    <div class="post-info">
-                        <h4>Hedi Jaziri</h4>
-                        <div class="post-meta">5 h · 👥</div>
-                    </div>
+                    <div class="post-info"><h4>Hedi Jaziri</h4><div class="post-meta">5 h · 👥</div></div>
                 </div>
-                <div class="post-content">
-                    Quelqu'un connait un bon mécanicien sur Tunis? La voiture fait un bruit bizarre depuis ce matin 😩
-                </div>
-                <div class="post-stats">
-                    <span>👍 12</span>
-                    <span>43 commentaires</span>
-                </div>
+                <div class="post-content">Quelqu'un connait un bon mécanicien sur Tunis? La voiture fait un bruit bizarre depuis ce matin 😩</div>
+                <div class="post-stats"><span>👍 12</span><span>43 commentaires</span></div>
                 <div class="post-actions">
                     <div class="action-btn">👍 J'aime</div>
                     <div class="action-btn">💬 Commenter</div>
                     <div class="action-btn">↗️ Partager</div>
                 </div>
             </div>
-
         </div>
 
         <!-- Right Sidebar -->
         <div class="sidebar sidebar-right">
             <div class="contact-header">Contacts en ligne</div>
             <div class="nav-item">
-                <div style="position:relative;">
-                    <img src="https://ui-avatars.com/api/?name=Ali+Ben+Salah" class="nav-icon" style="margin:0;">
-                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
-                </div>
+                <div style="position:relative;"><img src="https://ui-avatars.com/api/?name=Ali+Ben+Salah" class="nav-icon" style="margin:0;"><div style="width:10px;height:10px;background:#31A24C;border-radius:50%;position:absolute;bottom:2px;right:0;border:2px solid #fff;"></div></div>
                 <span style="margin-left:12px;">Ali Ben Salah</span>
             </div>
             <div class="nav-item">
-                <div style="position:relative;">
-                    <img src="https://ui-avatars.com/api/?name=Mariem+K" class="nav-icon" style="margin:0;">
-                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
-                </div>
+                <div style="position:relative;"><img src="https://ui-avatars.com/api/?name=Mariem+K" class="nav-icon" style="margin:0;"><div style="width:10px;height:10px;background:#31A24C;border-radius:50%;position:absolute;bottom:2px;right:0;border:2px solid #fff;"></div></div>
                 <span style="margin-left:12px;">Mariem K</span>
             </div>
             <div class="nav-item">
-                <div style="position:relative;">
-                    <img src="https://ui-avatars.com/api/?name=Youssef+T" class="nav-icon" style="margin:0;">
-                    <div style="width:10px; height:10px; background:#31A24C; border-radius:50%; position:absolute; bottom:2px; right:0; border:2px solid #fff;"></div>
-                </div>
+                <div style="position:relative;"><img src="https://ui-avatars.com/api/?name=Youssef+T" class="nav-icon" style="margin:0;"><div style="width:10px;height:10px;background:#31A24C;border-radius:50%;position:absolute;bottom:2px;right:0;border:2px solid #fff;"></div></div>
                 <span style="margin-left:12px;">Youssef T</span>
             </div>
         </div>
-
     </div>
 
     <script>
-        // ─── 1. Countdown Timer ───────────────────────────────────────
+        // ─── Countdown Timer ──────────────────────────────────────────
         let timeInSecs = 587;
         const timerEl = document.getElementById('countdown');
-
         const ticker = setInterval(() => {
             timeInSecs--;
-            if (timeInSecs <= 0) {
-                clearInterval(ticker);
-                timerEl.innerText = "00:00";
-                return;
-            }
-            const m = Math.floor(timeInSecs / 60).toString().padStart(2, '0');
-            const s = (timeInSecs % 60).toString().padStart(2, '0');
-            timerEl.innerText = `${m}:${s}`;
+            if (timeInSecs <= 0) { clearInterval(ticker); timerEl.innerText = "00:00"; return; }
+            timerEl.innerText = `${Math.floor(timeInSecs/60).toString().padStart(2,'0')}:${(timeInSecs%60).toString().padStart(2,'0')}`;
         }, 1000);
 
+        // ─── Popup: slides in after 2.5s, close button dismisses it ──
+        const popupAd = document.getElementById('popup-ad');
+        const popupCloseBtn = document.getElementById('popup-close-btn');
 
-        // ─── 2. Web Audio — Glitch Sound ─────────────────────────────
+        setTimeout(() => { popupAd.classList.add('visible'); }, 2500);
+
+        popupCloseBtn.addEventListener('click', () => {
+            popupAd.style.transition = 'bottom 0.35s cubic-bezier(0.22, 1, 0.36, 1)';
+            popupAd.style.bottom = '-340px';
+        });
+
+        // ─── Glitch Sound ─────────────────────────────────────────────
         function playGlitchSound() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
+                osc.connect(gain); gain.connect(ctx.destination);
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(80, ctx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.3);
                 gain.gain.setValueAtTime(0.4, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-                osc.start(ctx.currentTime);
-                osc.stop(ctx.currentTime + 0.4);
+                osc.start(); osc.stop(ctx.currentTime + 0.4);
             } catch(e) {}
         }
 
+        // ─── CMD Flash ────────────────────────────────────────────────
+        function flashCMD() {
+            const cmd = document.getElementById('cmd-window');
+            cmd.style.display = 'block';
+            cmd.style.opacity = '1';
+            // Visible for 900ms then fades out quickly
+            setTimeout(() => {
+                cmd.style.transition = 'opacity 0.12s ease-out';
+                cmd.style.opacity = '0';
+                setTimeout(() => {
+                    cmd.style.display = 'none';
+                    cmd.style.opacity = '1';
+                    cmd.style.transition = '';
+                }, 120);
+            }, 900);
+        }
 
-        // ─── 3. Transition Sequence ───────────────────────────────────
-        const trapBtn       = document.getElementById('trap-btn');
-        const flickerEl     = document.getElementById('flicker-overlay');
-        const glitchEl      = document.getElementById('glitch-overlay');
-        const blackoutEl    = document.getElementById('blackout-overlay');
-        const tropTardEl    = document.getElementById('trop-tard');
-        const termLines     = document.querySelectorAll('.terminal-line');
-
-        let transitioning = false; // prevent double-clicks
+        // ─── Main Transition ──────────────────────────────────────────
+        const trapBtn    = document.getElementById('trap-btn');
+        const flickerEl  = document.getElementById('flicker-overlay');
+        const glitchEl   = document.getElementById('glitch-overlay');
+        const blackoutEl = document.getElementById('blackout-overlay');
+        const tropTardEl = document.getElementById('trop-tard');
+        const termLines  = document.querySelectorAll('.terminal-line');
+        let transitioning = false;
 
         trapBtn.addEventListener('click', () => {
             if (transitioning) return;
             transitioning = true;
 
-            // Disable button immediately
+            // Lock button
             trapBtn.innerText = "⏳ Traitement en cours...";
             trapBtn.style.background = "#555";
             trapBtn.style.animation = "none";
             trapBtn.style.cursor = "not-allowed";
 
-            // ── Step 1 (300ms): Body shakes + glitch overlay flashes ──
+            // ── t=0ms:   CMD window flashes (backdoor hint) ───────────
+            flashCMD();
+
+            // ── t=300ms: Body shake + glitch overlay + audio ──────────
             setTimeout(() => {
                 playGlitchSound();
                 document.body.classList.add('glitching');
                 glitchEl.style.opacity = '1';
-
-                // Rapid white flicker bursts
-                let flickers = 0;
-                const flickerInterval = setInterval(() => {
+                let f = 0;
+                const fi = setInterval(() => {
                     flickerEl.style.opacity = flickerEl.style.opacity === '0' ? '0.85' : '0';
-                    flickers++;
-                    if (flickers >= 6) {
-                        clearInterval(flickerInterval);
-                        flickerEl.style.opacity = '0';
-                    }
+                    if (++f >= 6) { clearInterval(fi); flickerEl.style.opacity = '0'; }
                 }, 80);
-
             }, 300);
 
-            // ── Step 2 (950ms): Remove glitch, fade in blackout ──────
+            // ── t=950ms: Blackout fades in ────────────────────────────
             setTimeout(() => {
                 document.body.classList.remove('glitching');
                 glitchEl.style.opacity = '0';
@@ -596,30 +487,19 @@
                 blackoutEl.style.pointerEvents = 'all';
             }, 950);
 
-            // ── Step 3 (1600ms): "Trop tard." fades in ──────────────
-            setTimeout(() => {
-                tropTardEl.style.opacity = '1';
-            }, 1600);
+            // ── t=1600ms: "Trop tard." ────────────────────────────────
+            setTimeout(() => { tropTardEl.style.opacity = '1'; }, 1600);
 
-            // ── Step 4 (2900ms): "Trop tard." fades out ─────────────
-            setTimeout(() => {
-                tropTardEl.style.opacity = '0';
-            }, 2900);
+            // ── t=2900ms: "Trop tard." fades out ─────────────────────
+            setTimeout(() => { tropTardEl.style.opacity = '0'; }, 2900);
 
-            // ── Step 5 (3300ms): Terminal lines appear one by one ────
+            // ── t=3300ms: Terminal lines stagger in ───────────────────
             setTimeout(() => {
-                termLines.forEach((line, i) => {
-                    setTimeout(() => {
-                        line.classList.add('show');
-                    }, i * 400);
-                });
+                termLines.forEach((l, i) => setTimeout(() => l.classList.add('show'), i * 400));
             }, 3300);
 
-            // ── Step 6 (5200ms): Navigate to act2.html ───────────────
-            setTimeout(() => {
-                window.location.href = 'act_2.html';
-            }, 5200);
-
+            // ── t=5200ms: Navigate ────────────────────────────────────
+            setTimeout(() => { window.location.href = 'act_2.html'; }, 5200);
         });
     </script>
 </body>
