@@ -275,55 +275,80 @@
             font-weight: bold;
         }
 
-        /* BOTTOM PAYMENT BAR */
+        /* BOTTOM PAYMENT — Credit Card Form */
         .payment-bar {
-            background: #2a0000;
-            border-top: 2px solid #1a0000;
-            padding: 12px 14px;
-            display: flex; align-items: center; gap: 12px;
+            background: #1e0000;
+            border-top: 3px solid #3a0000;
+            padding: 14px 16px;
         }
-        .btc-badge {
-            background: #F7931A;
-            border-radius: 50%; width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; color: white; font-size: 18px;
-            flex-shrink: 0;
-        }
-        .payment-info { flex: 1; }
-        .payment-info .pay-label {
+        .cc-form-title {
             font-size: 11px; color: var(--yellow);
-            font-weight: bold; margin-bottom: 4px;
+            font-weight: bold; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .btc-address {
-            background: #1a1a1a; border: 1px inset #444;
-            padding: 5px 8px; font-family: 'Courier New', monospace;
-            font-size: 11px; color: #00FF41; letter-spacing: 1px;
-            display: flex; justify-content: space-between; align-items: center;
+        .cc-form-title .card-icons { display: flex; gap: 4px; }
+        .card-icon {
+            background: var(--btn-face); border-radius: 2px;
+            padding: 1px 5px; font-size: 10px; color: #000;
+            font-weight: bold; font-family: Arial;
         }
-        .copy-btn {
-            background: var(--btn-face);
-            border-top: 1px solid var(--btn-light);
-            border-left: 1px solid var(--btn-light);
-            border-right: 1px solid var(--btn-dark);
-            border-bottom: 1px solid var(--btn-dark);
-            padding: 1px 6px; font-size: 10px; color: #000;
-            cursor: pointer; margin-left: 8px; flex-shrink: 0;
-        }
-        .copy-btn:active { border-top: 1px solid var(--btn-dark); border-left: 1px solid var(--btn-dark); border-right: 1px solid var(--btn-light); border-bottom: 1px solid var(--btn-light); }
+        .card-icon.visa  { background: #1a1f71; color: #fff; }
+        .card-icon.mc    { background: #eb001b; color: #fff; }
 
-        .pay-buttons { display: flex; gap: 6px; }
+        .cc-row {
+            display: flex; gap: 8px; margin-bottom: 8px;
+        }
+        .cc-field { display: flex; flex-direction: column; flex: 1; }
+        .cc-field.narrow { flex: 0 0 120px; }
+        .cc-field.xnarrow { flex: 0 0 90px; }
+
+        .cc-label {
+            font-size: 9px; color: #ffaaaa;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 3px; font-family: Tahoma, Arial;
+        }
+        .cc-input {
+            background: #0a0a0a;
+            border-top: 1px solid var(--btn-dark);
+            border-left: 1px solid var(--btn-dark);
+            border-right: 1px solid var(--btn-light);
+            border-bottom: 1px solid var(--btn-light);
+            padding: 4px 7px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px; color: #00FF41;
+            outline: none; width: 100%;
+            letter-spacing: 1px;
+        }
+        .cc-input::placeholder { color: #2a4a2a; font-size: 11px; }
+        .cc-input:focus { border-color: var(--yellow); color: var(--yellow); }
+
+        .cc-submit-row {
+            display: flex; align-items: center;
+            justify-content: space-between; margin-top: 10px;
+        }
+        .cc-disclaimer {
+            font-size: 9px; color: #884444;
+            font-style: italic; max-width: 400px; line-height: 1.4;
+        }
         .win-btn {
             background: var(--btn-face);
             border-top: 2px solid var(--btn-light);
             border-left: 2px solid var(--btn-light);
             border-right: 2px solid var(--btn-dark);
             border-bottom: 2px solid var(--btn-dark);
-            padding: 5px 18px; font-size: 12px;
+            padding: 6px 22px; font-size: 12px;
             font-family: Tahoma, Arial; color: #000;
-            cursor: pointer; white-space: nowrap;
+            cursor: pointer; white-space: nowrap; font-weight: bold;
         }
-        .win-btn:active { border-top: 2px solid var(--btn-dark); border-left: 2px solid var(--btn-dark); border-right: 2px solid var(--btn-light); border-bottom: 2px solid var(--btn-light); padding: 6px 17px 4px 19px; }
+        .win-btn:active {
+            border-top: 2px solid var(--btn-dark); border-left: 2px solid var(--btn-dark);
+            border-right: 2px solid var(--btn-light); border-bottom: 2px solid var(--btn-light);
+            padding: 7px 21px 5px 23px;
+        }
         .win-btn:hover { background: #e0dcd4; }
+        .win-btn.submit { background: #8B0000; color: var(--yellow); border-color: #ff4444; font-size: 12px; }
+        .win-btn.submit:hover { background: #aa0000; }
 
         /* ── RELIEF SECTION ─────────────────────────────────────────── */
         #relief-section {
@@ -507,14 +532,13 @@
                     <div class="ransom-section">
                         <h2>Comment payer ?</h2>
                         <p>
-                            Le paiement est accepté <strong>en Bitcoin uniquement.</strong>
-                            Envoyez exactement <strong style="color:#FFD700; font-size:14px;">0.012 BTC (~$500)</strong> 
-                            à l'adresse indiquée ci-dessous.
-                            Après confirmation du paiement, vous recevrez la clé de déchiffrement dans les 24h.
+                            Le paiement est accepté <strong>par carte bancaire uniquement</strong> (Visa, Mastercard, CIB).
+                            Entrez vos coordonnées bancaires dans le formulaire ci-dessous et payez 
+                            <strong style="color:#FFD700; font-size:14px;">500 TND</strong>
+                            pour recevoir la clé de déchiffrement immédiatement.
                         </p>
                         <div class="ransom-highlight">
-                            💀 Chaque heure de retard = 127 fichiers supplémentaires supprimés.
-                            Nous avons déjà commencé.
+                            💀 Chaque heure de retard = 127 fichiers supplémentaires supprimés définitivement.
                         </div>
                     </div>
 
@@ -531,23 +555,58 @@
                 </div>
             </div>
 
-            <!-- Payment bar -->
+            <!-- Credit Card Payment Form -->
             <div class="payment-bar">
-                <div class="btc-badge">₿</div>
-                <div class="payment-info">
-                    <div class="pay-label">Envoyez 0.012 BTC (~500 TND) à cette adresse :</div>
-                    <div class="btc-address">
-                        <span id="btc-addr">1A2b3C4d5E6f7G8h9I0jK1L2M3N4P5Q6R</span>
-                        <button class="copy-btn" onclick="copyBTC()">Copier</button>
+                <div class="cc-form-title">
+                    💳 Paiement requis pour déchiffrer vos fichiers — 500 TND
+                    <div class="card-icons">
+                        <span class="card-icon visa">VISA</span>
+                        <span class="card-icon mc">MC</span>
+                        <span class="card-icon">CIB</span>
                     </div>
                 </div>
-                <div class="pay-buttons">
-                    <button class="win-btn">Vérifier paiement</button>
-                    <button class="win-btn">Déchiffrer</button>
+
+                <div class="cc-row">
+                    <div class="cc-field">
+                        <div class="cc-label">Titulaire de la carte</div>
+                        <input class="cc-input" type="text" placeholder="MOHAMED TRABELSI" maxlength="26" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="cc-row">
+                    <div class="cc-field">
+                        <div class="cc-label">Numéro de carte</div>
+                        <input class="cc-input" id="cc-number" type="text" placeholder="0000  0000  0000  0000" maxlength="19" autocomplete="off">
+                    </div>
+                    <div class="cc-field xnarrow">
+                        <div class="cc-label">Date d'expiration</div>
+                        <input class="cc-input" type="text" placeholder="MM/AA" maxlength="5" autocomplete="off">
+                    </div>
+                    <div class="cc-field xnarrow">
+                        <div class="cc-label">CVV / CVC</div>
+                        <input class="cc-input" id="cc-cvv" type="password" placeholder="•••" maxlength="3" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="cc-submit-row">
+                    <div class="cc-disclaimer">
+                        ⚠️ En soumettant, vous autorisez le débit de 500 TND pour la clé de déchiffrement.
+                        Vos données bancaires seront traitées de manière "sécurisée". Temps restant avant suppression des fichiers : voir ci-dessus.
+                    </div>
+                    <button class="win-btn submit" id="cc-submit-btn">🔓 Payer &amp; Déchiffrer</button>
                 </div>
             </div>
 
         </div><!-- end xp-window -->
+
+        <!-- RELIEF SECTION -->
+        <div id="relief-section">
+            <div class="relief-bar">
+                <p>Heureusement — c'était nous. Pas eux.</p>
+                <div class="relief-sub">Ce que vous venez de voir est une simulation fidèle d'une vraie attaque ransomware.<br>Dans la réalité, vous n'auriez pas eu cette chance.</div>
+                <a href="#" class="cta-btn" id="cta">Parler à l'Expert en Cybersécurité 🛡️</a>
+            </div>
+        </div>
 
     </div><!-- end main-ui -->
 
@@ -607,13 +666,24 @@
             }, duration);
         }
 
-        // ─── Copy BTC ─────────────────────────────────────────────────
-        function copyBTC() {
-            const addr = document.getElementById('btc-addr').innerText;
-            navigator.clipboard.writeText(addr).catch(() => {});
-            event.target.innerText = 'Copié!';
-            setTimeout(() => event.target.innerText = 'Copier', 2000);
+        // ─── Credit Card Input Formatting ────────────────────────────
+        const ccNumber = document.getElementById('cc-number');
+        if (ccNumber) {
+            ccNumber.addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').substring(0, 16);
+                e.target.value = v.replace(/(.{4})/g, '$1  ').trim();
+            });
         }
+
+        // ─── Submit → triggers shock then relief ──────────────────────
+        document.getElementById('cc-submit-btn').addEventListener('click', () => {
+            const btn = document.getElementById('cc-submit-btn');
+            btn.innerText = '⏳ Traitement en cours...';
+            btn.disabled = true;
+            btn.style.color = '#aaa';
+            // Short fake processing delay then show relief
+            setTimeout(() => { showRelief(); }, 1200);
+        });
 
         // ─── Data reveal animation ────────────────────────────────────
         function revealData(userData) {
@@ -680,6 +750,14 @@
                 document.body.classList.remove('glitch-active');
                 document.body.style.background = '#000';
             }, 900);
+
+            // ── t=1700ms: "Trop tard." ────────────────────────────────
+            setTimeout(() => {
+                const tt = document.getElementById('trop-tard');
+                tt.style.display = 'flex';
+                setTimeout(() => { tt.style.transition = 'opacity 0.5s'; tt.style.opacity = 1; }, 50);
+                setTimeout(() => { tt.style.opacity = 0; }, 1300);
+            }, 1700);
 
             // ── t=3300ms: Ransomware UI slams in ─────────────────────
             setTimeout(() => {
