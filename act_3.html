@@ -166,13 +166,11 @@
             margin: 0 auto 14px auto;
             overflow: hidden;
         }
-        
         .char-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
         .char-name {
             font-size: 13px; letter-spacing: 3px;
             text-transform: uppercase; color: var(--white);
@@ -460,9 +458,8 @@
 
             <div class="character-block">
                 <div class="char-avatar" id="char-avatar">
-                    <img src="./OIG4_inspyrenet.png" alt="M4SK">
+                    <img src="./OIG4_inspyrenet.png" alt="Beji Matrix">
                 </div>
-
                 <div class="char-name">Beji Matrix</div>
                 <div class="char-title">Expert · Cybersécurité TN</div>
                 <div class="char-status">
@@ -472,6 +469,7 @@
             </div>
 
             <div class="sidebar-divider"></div>
+
             <div class="sidebar-footer">
                 SIMULATION ÉDUCATIVE<br>
                 CYBERTRAP © 2025<br>
@@ -503,7 +501,7 @@
                     <textarea
                         id="user-input"
                         rows="2"
-                        placeholder="Posez une question à M4SK..."
+                        placeholder="Posez une question à Beji Matrix..."
                     ></textarea>
                     <button id="send-btn" id="send-btn">ACCESS</button>
                 </div>
@@ -540,7 +538,7 @@
             div.className = `msg ${role}`;
 
             const avatarChar = role === 'bot' ? '🎭' : '👤';
-            const senderName = role === 'bot' ? 'M4SK' : 'VOUS';
+            const senderName = role === 'bot' ? 'BEJI MATRIX' : 'VOUS';
 
             div.innerHTML = `
                 <div class="msg-avatar">${avatarChar}</div>
@@ -568,7 +566,7 @@
         // ─── Conversation history for API ────────────────────────────
         const history = [];
 
-        const SYSTEM_PROMPT = `Tu es M4SK, un expert tunisien en cybersécurité. 
+        const SYSTEM_PROMPT = `Tu es Beji Matrix, un expert tunisien en cybersécurité. 
 Tu portes une chechia rouge et un masque LED électrique — tu es jeune, cool, direct et tu parles franchement.
 Tu viens d'accompagner un utilisateur qui vient de se faire piéger par une simulation de phishing et de ransomware.
 Tu parles en français avec des expressions tunisiennes naturelles (darija légère).
@@ -577,23 +575,33 @@ Donne toujours 1 conseil concret actionnable à la fin de chaque réponse.
 Contexte: l'utilisateur vient de voir ses données exposées (IP, ville, appareil) et un faux écran ransomware qui demandait sa carte bancaire. Il n'a rien soumis — c'était une simulation éducative de CyberTrap.
 Ne dépasse jamais 4 paragraphes courts par réponse.`;
 
-        // ─── Call Claude API ──────────────────────────────────────────
-        async function callClaude(userMessage) {
+        const HF_TOKEN = "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"; // 🔑 Replace with real token
+
+        // ─── Call HuggingFace Router API ──────────────────────────────
+        async function callLLM(userMessage) {
             history.push({ role: 'user', content: userMessage });
 
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'claude-sonnet-4-20250514',
-                    max_tokens: 1000,
-                    system: SYSTEM_PROMPT,
-                    messages: history
-                })
-            });
+            const response = await fetch(
+                'https://router.huggingface.co/v1/chat/completions',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${HF_TOKEN}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'openai/gpt-oss-120b:groq',
+                        max_tokens: 500,
+                        messages: [
+                            { role: 'system', content: SYSTEM_PROMPT },
+                            ...history
+                        ]
+                    })
+                }
+            );
 
             const data = await response.json();
-            const reply = data.content?.[0]?.text || "Désolé, connexion perdue. Réessaie.";
+            const reply = data.choices?.[0]?.message?.content || "Désolé, connexion perdue. Réessaie.";
             history.push({ role: 'assistant', content: reply });
             return reply;
         }
@@ -613,7 +621,7 @@ Ne dépasse jamais 4 paragraphes courts par réponse.`;
             showTyping();
 
             try {
-                const reply = await callClaude(text.trim());
+                const reply = await callLLM(text.trim());
                 hideTyping();
                 addMessage('bot', reply);
             } catch (err) {
