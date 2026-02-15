@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALERTE SÉCURITÉ</title>
+    <style>
+        :root {
+            --red: #FF0000;
+            --dark-red: #1a0000;
+            --green: #00FF41;
+            --fb-blue: #1877F2;
+            --bg: #000000;
+            --terminal-bg: #0D0D0D;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            color: white;
+        }
+
+        /* --- STEP 1: FB FEED SNAPSHOT --- */
+        #fake-fb {
+            position: fixed;
+            inset: 0;
+            background: #F0F2F5;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+        .fb-header { height: 60px; background: white; border-bottom: 1px solid #ddd; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .fb-post { width: 500px; height: 400px; background: white; margin: 40px auto; border-radius: 8px; padding: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .fb-placeholder { background: #eee; height: 20px; margin-bottom: 15px; border-radius: 4px; }
+
+        /* --- STEP 2: GLITCH --- */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            background: transparent;
+            z-index: 101;
+            pointer-events: none;
+            display: none;
+        }
+        .glitch-active .glitch-overlay {
+            display: block;
+            animation: glitch-anim 0.2s infinite;
+        }
+        @keyframes glitch-anim {
+            0% { clip-path: inset(10% 0 30% 0); transform: translateX(-5px); filter: invert(1); }
+            50% { clip-path: inset(50% 0 10% 0); transform: translateX(5px); filter: invert(0); }
+            100% { clip-path: inset(20% 0 60% 0); transform: translateX(-2px); }
+        }
+
+        /* --- STEP 3/4: TROP TARD --- */
+        #trop-tard {
+            position: fixed;
+            inset: 0;
+            background: black;
+            z-index: 102;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: var(--red);
+            font-family: monospace;
+            font-size: 2.5rem;
+            opacity: 0;
+        }
+
+        /* --- STEP 5: MAIN INTERFACE --- */
+        #main-ui {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: none;
+            opacity: 0;
+            background: radial-gradient(ellipse at center, #1a0000 0%, #000000 70%);
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+
+        /* CRT Scanline Effect */
+        #main-ui::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 10;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .alert-banner {
+            background: var(--dark-red);
+            border-bottom: 1px solid var(--red);
+            padding: 15px;
+            text-align: center;
+            font-family: monospace;
+            color: var(--red);
+            letter-spacing: 4px;
+            animation: blink 0.8s infinite;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.2; } 100% { opacity: 1; } }
+
+        .terminal-card {
+            max-width: 680px;
+            width: 90%;
+            background: var(--terminal-bg);
+            border: 1px solid var(--red);
+            box-shadow: 0 0 20px rgba(255,0,0,0.3);
+            margin: 60px auto 20px;
+            padding: 40px;
+            border-radius: 4px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .card-header {
+            color: var(--red);
+            font-family: monospace;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .separator { border-top: 1px solid var(--red); opacity: 0.4; margin-bottom: 20px; }
+
+        .terminal-line {
+            font-family: monospace;
+            color: var(--green);
+            font-size: 0.95rem;
+            line-height: 2.2;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .status-compromis {
+            color: var(--red);
+            font-weight: bold;
+            font-size: 1.1em;
+            animation: slow-blink 1.5s infinite;
+        }
+        @keyframes slow-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .darija-note {
+            color: #AAAAAA;
+            font-size: 0.9rem;
+            text-align: center;
+            max-width: 500px;
+            margin: 20px auto;
+            font-style: italic;
+            opacity: 0;
+        }
+
+        /* Progress Bar */
+        #progress-section {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            opacity: 0;
+        }
+        .progress-label { font-size: 0.8rem; margin-bottom: 8px; font-family: monospace; }
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: #1a1a1a;
+            border-radius: 3px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF0000, #FF6600);
+            transition: width 3s cubic-bezier(0.1, 0, 0.1, 1);
+        }
+        .percentage { font-family: monospace; margin-left: 10px; font-size: 0.8rem; }
+
+        /* Relief Section */
+        #relief-section {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            opacity: 0;
+        }
+        .relief-sep { border-top: 1px solid #1a3a5c; margin: 40px 0; }
+        .relief-text { font-size: 1.1rem; margin-bottom: 30px; }
+
+        .cta-btn {
+            background: transparent;
+            border: 2px solid var(--fb-blue);
+            color: var(--fb-blue);
+            padding: 16px 32px;
+            border-radius: 4px;
+            font-family: monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: pulse-blue 2s infinite;
+        }
+        .cta-btn:hover { background: var(--fb-blue); color: white; }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(24, 119, 242, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(24, 119, 242, 0); }
+        }
+
+        .fade-out-white {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body class="glitch-active">
+
+    <!-- Step 1: Fake FB -->
+    <div id="fake-fb">
+        <div class="fb-header"></div>
+        <div class="fb-post">
+            <div class="fb-placeholder" style="width: 40%;"></div>
+            <div class="fb-placeholder" style="width: 90%; height: 200px;"></div>
+            <div class="fb-placeholder" style="width: 70%;"></div>
+            <div class="fb-placeholder" style="width: 30%; height: 40px; margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Step 2: Glitch Layer -->
+    <div class="glitch-overlay"></div>
+
+    <!-- Step 3/4: Trop Tard -->
+    <div id="trop-tard">Trop tard.</div>
+
+    <!-- Step 5: Main UI -->
+    <div id="main-ui">
+        <div class="alert-banner">⚠️ ALERTE SÉCURITÉ — INTRUSION DÉTECTÉE ⚠️</div>
+
+        <div class="terminal-card">
+            <div class="card-header">[ DONNÉES COLLECTÉES EN 3.2 SECONDES ]</div>
+            <div class="separator"></div>
+            <div id="terminal-content">
+                <!-- Lines populated by JS -->
+            </div>
+        </div>
+
+        <div class="darija-note" dir="auto">
+            W ama ki yji wahd hacker hqiqi — yaamel akther beaucoup 
+            من هذا. W nta maarafch.
+        </div>
+
+        <div id="progress-section">
+            <div style="display: flex; justify-content: space-between;">
+                <div class="progress-label">Transfert de données en cours...</div>
+                <div class="percentage" id="perc">0%</div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-fill" id="fill"></div>
+            </div>
+        </div>
+
+        <div id="relief-section">
+            <div class="relief-sep"></div>
+            <p class="relief-text">Heureusement — c'était nous. Pas eux.</p>
+            <a href="#" class="cta-btn" id="cta">Parler à Amira — Experte en Cybersécurité 🛡️</a>
+        </div>
+    </div>
+
+    <div class="fade-out-white" id="white-out"></div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playClick() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        async function init() {
+            let userData = {
+                ip: '197.0.0.1',
+                city: 'Tunis',
+                isp: 'Topnet',
+                os: navigator.platform,
+                browser: 'Browser',
+                res: `${window.screen.width}x${window.screen.height}`,
+                lang: navigator.language,
+                time: new Date().toLocaleTimeString()
+            };
+
+            // Fetch real data
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                userData.ip = data.ip;
+                userData.city = data.city;
+                userData.isp = data.org;
+            } catch (e) { console.log("Using fallback data"); }
+
+            const lines = [
+                `> Adresse IP          :  ${userData.ip}`,
+                `> Localisation        :  ${userData.city}, Tunisie 🇹🇳`,
+                `> Fournisseur         :  ${userData.isp}`,
+                `> Appareil            :  ${navigator.userAgent.split(')')[0].split('(')[1]}`,
+                `> Résolution écran    :  ${userData.res}`,
+                `> Langue système      :  ${userData.lang}`,
+                `> Heure locale        :  ${userData.time}`,
+                `> Statut              :  <span class="status-compromis">████████████ COMPROMIS</span>`
+            ];
+
+            // Sequence Timing
+            // Step 1 & 2 happen on load via CSS + Class
+            
+            setTimeout(() => {
+                // Step 3: Hard cut to black
+                document.getElementById('fake-fb').style.display = 'none';
+                document.body.classList.remove('glitch-active');
+                document.body.style.backgroundColor = '#000000';
+            }, 900);
+
+            setTimeout(() => {
+                // Step 4: Trop tard
+                const tt = document.getElementById('trop-tard');
+                tt.style.display = 'flex';
+                tt.style.transition = 'opacity 0.5s';
+                setTimeout(() => tt.style.opacity = 1, 50);
+                
+                setTimeout(() => {
+                    tt.style.opacity = 0;
+                }, 1200);
+            }, 1700);
+
+            setTimeout(() => {
+                // Step 5: Main interface
+                document.getElementById('trop-tard').style.display = 'none';
+                const main = document.getElementById('main-ui');
+                main.style.display = 'block';
+                setTimeout(() => main.style.opacity = 1, 50);
+                
+                // Start Terminal Typing
+                startTerminal(lines);
+            }, 3200);
+        }
+
+        function startTerminal(lines) {
+            const container = document.getElementById('terminal-content');
+            let lineIndex = 0;
+
+            function typeLine() {
+                if (lineIndex < lines.length) {
+                    const div = document.createElement('div');
+                    div.className = 'terminal-line';
+                    div.style.display = 'block';
+                    div.innerHTML = '';
+                    container.appendChild(div);
+                    
+                    let charIndex = 0;
+                    const text = lines[lineIndex];
+                    
+                    // Simple logic to handle HTML in the COMPROMIS line
+                    const isHtml = text.includes('<span');
+                    
+                    const interval = setInterval(() => {
+                        if (isHtml && charIndex > text.indexOf('<span')) {
+                            div.innerHTML = text;
+                            clearInterval(interval);
+                            playClick();
+                            finishLine();
+                        } else {
+                            div.innerHTML += text[charIndex];
+                            playClick();
+                            charIndex++;
+                            if (charIndex >= text.length) {
+                                clearInterval(interval);
+                                finishLine();
+                            }
+                        }
+                    }, 20);
+                }
+            }
+
+            function finishLine() {
+                lineIndex++;
+                setTimeout(typeLine, 400);
+                if (lineIndex === lines.length) {
+                    showProgress();
+                }
+            }
+
+            typeLine();
+        }
+
+        function showProgress() {
+            setTimeout(() => {
+                const note = document.querySelector('.darija-note');
+                note.style.transition = 'opacity 1s';
+                note.style.opacity = 1;
+            }, 500);
+
+            setTimeout(() => {
+                const ps = document.getElementById('progress-section');
+                ps.style.transition = 'opacity 1s';
+                ps.style.opacity = 1;
+                
+                const fill = document.getElementById('fill');
+                const percText = document.getElementById('perc');
+                fill.style.width = '83%';
+                
+                let p = 0;
+                const pInterval = setInterval(() => {
+                    p++;
+                    percText.innerText = p + '%';
+                    if (p >= 83) clearInterval(pInterval);
+                }, 35);
+
+                // Show Relief
+                setTimeout(showRelief, 4000);
+            }, 1500);
+        }
+
+        function showRelief() {
+            const relief = document.getElementById('relief-section');
+            relief.style.transition = 'opacity 1.5s';
+            relief.style.opacity = 1;
+        }
+
+        // CTA Handler
+        document.getElementById('cta').addEventListener('click', (e) => {
+            e.preventDefault();
+            const wo = document.getElementById('white-out');
+            wo.style.display = 'block';
+            wo.style.transition = 'opacity 0.8s';
+            setTimeout(() => wo.style.opacity = 1, 10);
+            setTimeout(() => {
+                // In a real scenario: window.location.href = 'act3.html';
+                alert("Fin de l'Acte 2. Redirection vers l'Acte 3 (Module Éducatif).");
+            }, 800);
+        });
+
+        window.onload = init;
+    </script>
+</body>
+</html>
