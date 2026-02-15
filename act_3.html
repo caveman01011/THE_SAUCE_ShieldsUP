@@ -525,11 +525,11 @@
             <!-- Suggestion chips -->
             <div id="suggestions">
                 <div class="suggestion-chip" data-msg="C'était quoi exactement ce formulaire de carte bancaire ?">Formulaire bancaire</div>
-                <div class="suggestion-chip" data-msg="Comment reconnaître un faux site web ?">Faux sites</div>
-                <div class="suggestion-chip" data-msg="Comment protéger mes mots de passe ?">Mots de passe</div>
-                <div class="suggestion-chip" data-msg="Comment éviter les arnaques WhatsApp en Tunisie ?">Arnaques WhatsApp</div>
-                <div class="suggestion-chip" data-msg="Qu'est-ce qu'un ransomware et comment s'en protéger ?">Ransomware</div>
-                <div class="suggestion-chip" data-msg="Quels sont les bons réflexes en cybersécurité au quotidien ?">Réflexes quotidiens</div>
+                <div class="suggestion-chip" data-msg="Comment je reconnais un faux site, wallah comment on sait ?">Faux sites</div>
+                <div class="suggestion-chip" data-msg="Comment je protège mes mots de passe bro ?">Mots de passe</div>
+                <div class="suggestion-chip" data-msg="Comment j'évite les arnaques WhatsApp en Tunisie ?">Arnaques WhatsApp</div>
+                <div class="suggestion-chip" data-msg="C'est quoi un ransomware et comment je me protège ?">Ransomware</div>
+                <div class="suggestion-chip" data-msg="Quels sont les bons réflexes à avoir au quotidien ?">Réflexes quotidiens</div>
             </div>
 
             <div id="input-bar">
@@ -538,9 +538,9 @@
                     <textarea
                         id="user-input"
                         rows="2"
-                        placeholder="Posez une question à Beji Matrix..."
+                        placeholder="Pose ta question à Beji Matrix..."
                     ></textarea>
-                    <button id="send-btn" id="send-btn">ACCESS</button>
+                    <button id="send-btn">ACCESS</button>
                 </div>
                 <div class="input-hint">ENTRÉE pour envoyer · MAJ+ENTRÉE pour nouvelle ligne</div>
             </div>
@@ -603,16 +603,15 @@
         // ─── Conversation history for API ────────────────────────────
         const history = [];
 
-        const SYSTEM_PROMPT = `Tu es Beji Matrix, un expert tunisien en cybersécurité. 
-Tu portes une chechia rouge et un masque LED électrique — tu es jeune, cool, direct et tu parles franchement.
-Tu viens d'accompagner un utilisateur qui vient de se faire piéger par une simulation de phishing et de ransomware.
-Tu parles en français avec des expressions tunisiennes naturelles (darija légère).
-Tu es calme, rassurant mais sérieux. Tes réponses sont courtes, claires, sans jargon inutile.
-Donne toujours 1 conseil concret actionnable à la fin de chaque réponse.
-Contexte: l'utilisateur vient de voir ses données exposées (IP, ville, appareil) et un faux écran ransomware qui demandait sa carte bancaire. Il n'a rien soumis — c'était une simulation éducative de CyberTrap.
+        const SYSTEM_PROMPT = `Tu es Beji Matrix, un expert tunisien en cybersécurité.
+Tu portes une chechia rouge et un masque LED électrique — t'es jeune, stylé, direct et tu parles cash.
+Tu t'exprimes en dialecte tunisien francophone : un mélange naturel de français et de darija tunisienne, comme on parle vraiment dans la rue à Tunis. Exemples de ton registre : "wallah", "bro", "ma3andekch", "chkoun", "rabi y9ik", "rani", "normal heka", "mrigel", "barcha", "mazel", "kifkif".
+Tu es calme, rassurant mais sérieux. Tes réponses sont courtes et claires, sans jargon inutile.
+Donne toujours 1 conseil concret et actionnable à la fin de chaque réponse.
+Contexte : l'utilisateur vient de passer une simulation CyberTrap — il a vu ses données exposées (IP, ville, appareil) et un faux écran ransomware qui demandait ses coordonnées bancaires. Il n'a rien soumis. C'était éducatif.
 Ne dépasse jamais 4 paragraphes courts par réponse.`;
 
-        const HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // 🔑 Replace with real token
+        const HF_TOKEN = "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"; // 🔑 Replace with real token
 
         // ─── Call HuggingFace Router API ──────────────────────────────
         async function callLLM(userMessage) {
@@ -663,7 +662,7 @@ Ne dépasse jamais 4 paragraphes courts par réponse.`;
                 addMessage('bot', reply);
             } catch (err) {
                 hideTyping();
-                addMessage('bot', "Connexion interrompue. Vérifie ta connexion et réessaie.");
+                addMessage('bot', "Connexion coupée bro. Réessaie.");
             } finally {
                 input.disabled = false;
                 sendBtn.disabled = false;
@@ -720,12 +719,14 @@ Ne dépasse jamais 4 paragraphes courts par réponse.`;
                 setTimeout(() => {
                     hideTyping();
                     addMessage('bot',
-                        `Saha. T'as survécu à la simulation — mabrouk 🎭\n\n` +
-                        `Ce que t'as vu c'était du phishing classique. Le lien sponsorisé, la fausse page Ooredoo, ` +
-                        `tes données exposées, le faux ransomware qui demande ta carte... c'est exactement comme ça ` +
-                        `que ça marche dans la vraie vie.\n\n` +
-                        `La différence ? Dans la réalité, y'a personne pour te stopper.\n\n` +
-                        `Pose-moi tes questions — je suis là.`
+                        `Mabrouk bro, t'as passé la simulation !.\n\n` +
+                        `Mais écoute bien : ce que t'as vu là, c'est exactement ce que les vrais hackers font. ` +
+                        `Un lien sponsorisé, une fausse page Ooredoo, tes données qui s'affichent... et un écran ransomware ` +
+                        `qui demande ta carte. Wallah c'est du copier-coller de la réalité.\n\n` +
+                        `⚠️ Dans la vraie vie, si tu cliques sur un lien zarbi et tu rentres tes infos bancaires — ` +
+                        `c'est fini. Ma3andekch retour en arrière. Ils prennent l'argent et disparaissent.\n\n` +
+                        `Règle numéro 1 : aucune société sérieuse — Ooredoo, Orange, ta banque — ` +
+                        `va jamais te demander tes infos par un lien. Jamais. Pose-moi tes questions, je suis là.`
                     );
                 }, 1800);
             }, 800);
